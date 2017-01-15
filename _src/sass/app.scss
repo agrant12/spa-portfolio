@@ -1,0 +1,30 @@
+@import 'partials/variables';
+
+body {
+	margin: 0;
+	padding: 0;
+}
+.wrapper {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	position: relative;
+	width: 100%;
+	header {
+		padding: 20px;
+		ul.navigation {
+			margin: 0;
+			padding: 0;
+			li {
+				list-style: none;
+				a {
+					color: $black;
+					text-decoration: none;
+					&:hover {
+						color: $brand-blue;
+					}
+				}
+			}
+		}
+	}
+}
