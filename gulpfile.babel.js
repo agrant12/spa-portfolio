@@ -11,7 +11,8 @@ var gulp = require('gulp'),
 	imagemin = require('gulp-imagemin'),
 	cmq = require('gulp-combine-mq'),
 	rename = require('gulp-rename'),
-	add = require('gulp-add-src');
+	add = require('gulp-add-src'),
+	pug = require('gulp-pug');
 
 const dirs = {
 	src:    './_src/',
@@ -31,6 +32,11 @@ scripts = {
 images = {
 	src:    `${dirs.src}/images`,
 	build:  `${dirs.build}/images`   
+},
+
+templates = {
+	src:    '${dirs.src}/templates',
+	build:  '../'
 };
 
 
@@ -88,18 +94,26 @@ images = {
 	.pipe(gulp.dest(images.build))
 });
 
+gulp.task('templates', function() {
+	gulp.src('./_src/templates/index.pug')
+	.pipe(pug())
+	.pipe(rename({extname:'.html'}))
+	.pipe(gulp.dest('./'))
+});
+
 
 /*
  *  WATCH tasks to serve up
  */
- gulp.task('watch', ['styles', 'scripts'], function () {
+ gulp.task('watch', ['styles', 'scripts', 'templates'], function () {
 	gulp.watch(`${styles.src}/**/*.scss`, ['styles']);
 	gulp.watch(`${scripts.src}/**/*.js`, ['scripts']);
+	gulp.watch(`${templates.src}/**/*.pug`, ['templates']);
 });
 
 
 /*
  *  DEFAULT tasks to serve up
  */
- gulp.task('default', ['styles', 'scripts']);
+ gulp.task('default', ['styles', 'scripts', 'templates']);
 
