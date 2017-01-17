@@ -2,12 +2,23 @@
 *********************************************************
 * 1: Colors
 *********************************************************
+*//*
+*********************************************************
+* 2: Structure
+*********************************************************
 */body {
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
 }
 
 .wrapper {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.wrapper header {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -17,29 +28,114 @@
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
-  height: 100%;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 20px;
+  width: 1150px;
+}
+
+.wrapper header div.branding h1 {
+  margin: 0;
+}
+
+.wrapper header #menu-icon {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 22px;
   position: relative;
+  width: 22px;
+}
+
+.wrapper header #menu-icon span {
+  background-color: #000000;
+  height: 3px;
+  position: absolute;
+  top: 2px;
   width: 100%;
 }
 
-.wrapper header {
-  padding: 20px;
+.wrapper header #menu-icon span:nth-child(2) {
+  top: 8px;
 }
 
-.wrapper header ul.navigation {
+.wrapper header #menu-icon span:nth-child(3) {
+  top: 14px;
+}
+
+.wrapper header #menu-icon .rotate1 {
+  margin-top: 5px;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.wrapper header #menu-icon .rotate2 {
+  display: none;
+}
+
+.wrapper header #menu-icon .rotate3 {
+  margin-top: -8px;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.wrapper header div.overlay {
+  display: none;
+}
+
+.wrapper header div.overlay ul.navigation {
   margin: 0;
   padding: 0;
 }
 
-.wrapper header ul.navigation li {
+.wrapper header div.overlay ul.navigation li {
   list-style: none;
+  margin-bottom: 10px;
 }
 
-.wrapper header ul.navigation li a {
+.wrapper header div.overlay ul.navigation li a {
   color: #000000;
+  font-size: 1.3rem;
   text-decoration: none;
+  -webkit-transition: color 2s;
+  transition: color 2s;
 }
 
-.wrapper header ul.navigation li a:hover {
-  color: #074A21;
+.wrapper header div.overlay ul.navigation li a:hover {
+  color: #79a1e3;
+}
+
+.wrapper footer {
+  bottom: 0;
+  display: none;
+  position: absolute;
+}
+
+.wrapper main {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.wrapper main #hero {
+  position: fixed;
+  width: 100%;
 }
