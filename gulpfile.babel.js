@@ -69,9 +69,11 @@ templates = {
 	// Custom JS
 	gulp.src([
 		`${scripts.src}/libs/tweenmax.min.js`,
+		`${scripts.src}/libs/jquery-3.1.1.min.js`,
 		`${scripts.src}/app.js`
 		])
 	.pipe(babel({presets: ['es2015']}))
+	.pipe(add.prepend(`${scripts.src}/libs/jquery-3.1.1.min.js`))
 	.pipe(add.prepend(`${scripts.src}/libs/tweenmax.min.js`))
 	.pipe(concat('app.js'))
 	.pipe(gulp.dest(scripts.build))
@@ -105,7 +107,7 @@ gulp.task('templates', function() {
 /*
  *  WATCH tasks to serve up
  */
- gulp.task('watch', ['styles', 'scripts', 'templates'], function () {
+ gulp.task('watch', ['styles', 'scripts', 'templates'], function() {
 	gulp.watch(`${styles.src}/**/*.scss`, ['styles']);
 	gulp.watch(`${scripts.src}/**/*.js`, ['scripts']);
 	gulp.watch(`${templates.src}/**/*.pug`, ['templates']);
