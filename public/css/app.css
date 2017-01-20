@@ -41,7 +41,7 @@
   margin: 0;
 }
 
-.wrapper header #menu-icon {
+.wrapper header .menu-icon {
   cursor: pointer;
   display: -webkit-box;
   display: -webkit-flex;
@@ -57,7 +57,7 @@
   width: 22px;
 }
 
-.wrapper header #menu-icon span {
+.wrapper header .menu-icon span {
   background-color: #000000;
   height: 3px;
   position: absolute;
@@ -65,56 +65,85 @@
   width: 100%;
 }
 
-.wrapper header #menu-icon span:nth-child(2) {
+.wrapper header .menu-icon span:nth-child(2) {
   top: 8px;
 }
 
-.wrapper header #menu-icon span:nth-child(3) {
+.wrapper header .menu-icon span:nth-child(3) {
   top: 14px;
 }
 
-.wrapper header #menu-icon .rotate1 {
+.wrapper header .menu-icon .rotate1 {
   margin-top: 5px;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 
-.wrapper header #menu-icon .rotate2 {
+.wrapper header .menu-icon .rotate2 {
   display: none;
 }
 
-.wrapper header #menu-icon .rotate3 {
+.wrapper header .menu-icon .rotate3 {
   margin-top: -8px;
   -webkit-transform: rotate(-45deg);
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
 
-.wrapper header div.overlay {
-  display: none;
+.wrapper header div#nav {
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  background-color: white;
+  font-size: 14px;
+  height: 100%;
+  padding: 20px 30px;
+  position: fixed;
+  top: 0;
+  right: -320px;
+  width: 290px;
+  z-index: 500;
 }
 
-.wrapper header div.overlay ul.navigation {
+.wrapper header div#nav .menu-icon {
+  left: 270px;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.wrapper header div#nav ul.navigation {
   margin: 0;
   padding: 0;
 }
 
-.wrapper header div.overlay ul.navigation li {
+.wrapper header div#nav ul.navigation li {
   list-style: none;
   margin-bottom: 10px;
 }
 
-.wrapper header div.overlay ul.navigation li a {
-  color: #000000;
-  font-size: 1.3rem;
+.wrapper header div#nav ul.navigation li a {
+  color: #999;
   text-decoration: none;
-  -webkit-transition: color 2s;
-  transition: color 2s;
+  text-transform: uppercase;
+  -webkit-transition: color .5s;
+  transition: color .5s;
 }
 
-.wrapper header div.overlay ul.navigation li a:hover {
+.wrapper header div#nav ul.navigation li a:hover {
   color: #79a1e3;
+}
+
+.wrapper header .slideLeft {
+  right: -320px !important;
+  -webkit-transition: right .5s;
+  transition: right .5s;
+}
+
+.wrapper header .slideRight {
+  right: 0 !important;
+  -webkit-transition: right .5s;
+  transition: right .5s;
 }
 
 .wrapper footer {

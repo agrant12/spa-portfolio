@@ -21,7 +21,7 @@ body {
 				margin: 0;
 			}
 		}
-		#menu-icon {
+		.menu-icon {
 			cursor: pointer;
 			display: flex;
 			flex-direction: column;
@@ -53,8 +53,22 @@ body {
 				transform: rotate(-45deg);
 			}
 		}
-		div.overlay {
-			display: none;
+		div#nav {
+			align-content: center;
+			background-color: rgba(255,255,255, 1);
+			font-size: 14px;
+			height: 100%;
+			padding: 20px 30px;
+			position: fixed;
+			top: 0;
+			right: -320px;
+			width: 290px;
+			z-index: 500;
+			.menu-icon {
+				left: 270px;
+				margin-bottom: 30px;
+				position: relative;
+			}
 			ul.navigation {
 				margin: 0;
 				padding: 0;
@@ -62,16 +76,24 @@ body {
 					list-style: none;
 					margin-bottom: 10px;
 					a {
-						color: $black;
-						font-size: 1.3rem;
+						color: #999;
 						text-decoration: none;
-						transition: color 2s;
+						text-transform: uppercase;
+						transition: color .5s;
 						&:hover {
 							color: $brand-blue;
 						}
 					}
 				}
 			}
+		}
+		.slideLeft {
+			right: -320px !important;
+			transition: right .5s;
+		}
+		.slideRight {
+			right: 0 !important;
+			transition: right .5s;
 		}
 	}
 	footer {
