@@ -6,6 +6,10 @@ html
 			include partials/header.pug
 			main
 				include partials/hero.pug
+				section(id="content")
+					include partials/about.pug
+					include partials/works.pug
+					include partials/contact.pug
 			include partials/footer.pug
 			script(src='public/js/app.js', type='text/javascript')
 			script(src='public/js/google-analytics.js', type='text/javascript')

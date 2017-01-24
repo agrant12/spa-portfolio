@@ -12,6 +12,11 @@
   padding: 0;
 }
 
+.container {
+  background-color: white;
+  border-top: 1px solid #000;
+}
+
 .wrapper {
   height: 100%;
   position: relative;
@@ -34,11 +39,21 @@
   justify-content: space-between;
   margin: 0 auto;
   padding: 20px;
+  position: fixed;
   width: 1150px;
+  z-index: 500;
+}
+
+.wrapper header div.branding {
+  position: fixed;
+  top: 8%;
+  left: 10%;
 }
 
 .wrapper header div.branding h1 {
+  font-size: 24px;
   margin: 0;
+  text-transform: uppercase;
 }
 
 .wrapper header .menu-icon {
@@ -53,8 +68,11 @@
   -ms-flex-direction: column;
   flex-direction: column;
   height: 22px;
-  position: relative;
+  position: fixed;
+  right: 10%;
+  top: 8%;
   width: 22px;
+  z-index: 501;
 }
 
 .wrapper header .menu-icon span {
@@ -101,7 +119,7 @@
   padding: 20px 30px;
   position: fixed;
   top: 0;
-  right: -320px;
+  right: -350px;
   width: 290px;
   z-index: 500;
 }
@@ -124,6 +142,7 @@
 
 .wrapper header div#nav ul.navigation li a {
   color: #999;
+  font-weight: bold;
   text-decoration: none;
   text-transform: uppercase;
   -webkit-transition: color .5s;
@@ -135,15 +154,15 @@
 }
 
 .wrapper header .slideLeft {
-  right: -320px !important;
-  -webkit-transition: right .5s;
-  transition: right .5s;
+  right: -350px !important;
+  -webkit-transition: right .2s;
+  transition: right .2s;
 }
 
 .wrapper header .slideRight {
   right: 0 !important;
-  -webkit-transition: right .5s;
-  transition: right .5s;
+  -webkit-transition: right .2s;
+  transition: right .2s;
 }
 
 .wrapper footer {
@@ -164,7 +183,88 @@
   flex-direction: column;
 }
 
+.wrapper main #content {
+  position: absolute;
+  width: 100%;
+}
+
 .wrapper main #hero {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   position: fixed;
   width: 100%;
+}
+
+.wrapper main #hero #intro {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
+  align-self: center;
+  margin: 0 auto;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.wrapper main #hero #intro h3 {
+  font-size: 100px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.wrapper main #hero #intro .name {
+  color: #79a1e3;
+  font-size: 50px;
+  font-weight: 500;
+  letter-spacing: 10px;
+  margin: 10px;
+}
+
+.wrapper main #hero #intro .occupation {
+  font-weight: 400;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.wrapper main #about {
+  background-color: white;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 125px 0;
+}
+
+.wrapper main #about .block {
+  margin: 0 auto;
+}
+
+.wrapper main #about .block div#counter {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.wrapper main #about .block div#counter p#count {
+  font-size: 72px;
+  font-weight: 700;
+  margin: 0px;
+}
+
+.wrapper main #about .block div#counter p.years {
+  color: #79a1e3;
+  font-size: 48px;
+  margin: 18px;
+  text-transform: uppercase;
+}
+
+.wrapper main #about .block p.copy {
+  margin: 0;
+  text-align: center;
 }

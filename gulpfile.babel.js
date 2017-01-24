@@ -70,11 +70,13 @@ templates = {
 	gulp.src([
 		`${scripts.src}/libs/tweenmax.min.js`,
 		`${scripts.src}/libs/jquery-3.1.1.min.js`,
+		`${scripts.src}/libs/masonry.js`,
 		`${scripts.src}/app.js`
 		])
 	.pipe(babel({presets: ['es2015']}))
 	.pipe(add.prepend(`${scripts.src}/libs/jquery-3.1.1.min.js`))
 	.pipe(add.prepend(`${scripts.src}/libs/tweenmax.min.js`))
+	.pipe(add.prepend(`${scripts.src}/libs/masonry.js`))
 	.pipe(concat('app.js'))
 	.pipe(gulp.dest(scripts.build))
 	.pipe(concat('app.js'))

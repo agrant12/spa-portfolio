@@ -5,6 +5,11 @@ body {
 	margin: 0;
 	padding: 0;
 }
+.container {
+	background-color: white;
+	border-top: 1px solid #000;
+	//padding: 50px;
+}
 .wrapper {
 	height: 100%;
 	position: relative;
@@ -15,10 +20,17 @@ body {
 		justify-content: space-between;
 		margin: 0 auto;
 		padding: 20px;
+		position: fixed;
 		width: 1150px;
+		z-index: 500;
 		div.branding {
+			position: fixed;
+			top: 8%;
+			left: 10%;
 			h1 {
+				font-size: 24px;
 				margin: 0;
+				text-transform: uppercase;
 			}
 		}
 		.menu-icon {
@@ -26,8 +38,11 @@ body {
 			display: flex;
 			flex-direction: column;
 			height: 22px;
-			position: relative;
+			position: fixed;
+			right: 10%;
+			top: 8%;
 			width: 22px;
+			z-index: 501;
 			span {
 				background-color: $black;
 				height: 3px;
@@ -61,7 +76,7 @@ body {
 			padding: 20px 30px;
 			position: fixed;
 			top: 0;
-			right: -320px;
+			right: -350px;
 			width: 290px;
 			z-index: 500;
 			.menu-icon {
@@ -77,6 +92,7 @@ body {
 					margin-bottom: 10px;
 					a {
 						color: #999;
+						font-weight: bold;
 						text-decoration: none;
 						text-transform: uppercase;
 						transition: color .5s;
@@ -88,12 +104,12 @@ body {
 			}
 		}
 		.slideLeft {
-			right: -320px !important;
-			transition: right .5s;
+			right: -350px !important;
+			transition: right .2s;
 		}
 		.slideRight {
 			right: 0 !important;
-			transition: right .5s;
+			transition: right .2s;
 		}
 	}
 	footer {
@@ -104,9 +120,64 @@ body {
 	main {
 		display: flex;
 		flex-direction: column;
+		#content {
+			position: absolute;
+			width: 100%;
+		}
 		#hero {
+			display: flex;
+			align-items: center;
 			position: fixed;
 			width: $site-width;
+			#intro {
+				align-self: center;
+				margin: 0 auto;
+				text-align: center;
+				text-transform: uppercase;
+				h3 {
+					font-size: 100px;
+					font-weight: 700;
+					margin: 0;
+				}
+				.name {
+					color: #79a1e3;
+					font-size: 50px;
+					font-weight: 500;
+					letter-spacing: 10px;
+					margin: 10px;
+				}
+				.occupation {
+					font-weight: 400;
+					font-size: 18px;
+					letter-spacing: 2px;
+				}
+			}
+		}
+		#about {
+			background-color: white;
+			display: flex;
+			padding: 125px 0;
+			.block {
+				margin: 0 auto;
+				div#counter {
+					display: flex;
+					p#count {
+						font-size: 72px;
+						font-weight: 700;
+						margin: 0px;
+					}
+					p.years {
+						color: #79a1e3;
+						font-size: 48px;
+						margin: 18px;
+						text-transform: uppercase;
+					}
+				}
+				p.copy {
+					margin: 0;
+					text-align: center;
+				}
+			}
 		}
 	}
 }
