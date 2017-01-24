@@ -40,7 +40,7 @@ let app = (function() {
 		
 		window.addEventListener('scroll', function() {
 			if (visibleElement(count) == true) {
-				tl.to(counter, 1.5, {
+				tl.to(counter, 0.8, {
 					var: 8,
 					onUpdate: function() {
 						$(count).html(Math.ceil(counter.var));
@@ -49,7 +49,7 @@ let app = (function() {
 
 					},
 					ease: Circ.easeOut
-				}, '+=0.8');
+				}, '+=0.5');
 			}
 		});
 	}
@@ -66,6 +66,24 @@ let app = (function() {
 			return false;
 		}
 	}
+
+	let getWorks = function() {
+		let $grid = $('.grid');
+
+		$.ajax({
+			url: './json/works.json'
+		}).done(function(data) {
+			$(data.works).each(function(k, v) {
+				let name = v.name,
+					tags = v.tags,
+					image = v.mainphoto,
+					dataTag = v.data;
+					workBlock = "<div class='grid-item' data-work=" + dataTag + "><div class='name'>" + name + "</div><div class='tags'>" + tags + "</div><div class='image'>" + image + "</div></div>";
+
+				$grid.append(workBlock);
+			});
+		});
+	}
 	
 	return {
 		init: function() {
@@ -73,6 +91,7 @@ let app = (function() {
 			heroHeight();
 			showMenu();
 			counterAnimation();
+			getWorks();
 		}
 	}
 
