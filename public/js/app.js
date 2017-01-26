@@ -5049,7 +5049,7 @@ var app = function () {
 		window.addEventListener('scroll', function () {
 			if (visibleElement(count) == true) {
 				tl.to(counter, 0.8, {
-					var: 8,
+					var: 9,
 					onUpdate: function onUpdate() {
 						$(count).html(Math.ceil(counter.var));
 					},
@@ -5066,7 +5066,7 @@ var app = function () {
 		    top = w - box.top,
 		    bottom = w - box.bottom;
 
-		if (top > 0 && bottom > 0) {
+		if (top > 0) {
 			return true;
 		} else {
 			return false;
@@ -5075,6 +5075,7 @@ var app = function () {
 
 	var getWorks = function getWorks() {
 		var $grid = $('.grid');
+		counter = 0;
 
 		$.ajax({
 			url: './json/works.json'
@@ -5084,10 +5085,60 @@ var app = function () {
 				    tags = v.tags,
 				    image = v.mainphoto,
 				    dataTag = v.data;
-				workBlock = "<div class='grid-item' data-work=" + dataTag + "><div class='name'>" + name + "</div><div class='tags'>" + tags + "</div><div class='image'>" + image + "</div></div>";
+				workBlock = "<div class='grid-item grid-item--width" + counter + " grid-item--height" + counter + "' data-work=" + dataTag + "><div class='name'>" + name + "</div><div class='tags'>" + tags + "</div><div class='image'><img src='" + image + "' /></div></div>";
 
 				$grid.append(workBlock);
+				if (counter > 4) {
+					counter = 0;
+				}
+				counter++;
 			});
+		}).then(function () {
+			animateGrid();
+		}).then(function () {
+			workItem();
+		});
+	};
+
+	var animateGrid = function animateGrid() {
+		var tl = new TimelineMax();
+		works = document.getElementById('works');
+		$items = $('.grid-item');
+
+		window.addEventListener('scroll', function () {
+			if (visibleElement(works) == true) {
+				tl.staggerTo($items, 0.5, { opacity: 1 }, '0.2');
+			}
+		});
+	};
+
+	var workItem = function workItem() {
+		var item = document.querySelectorAll('.grid-item');
+
+		for (var i = item.length - 1; i >= 0; i--) {
+			item[i].addEventListener('click', function () {
+				var $data = $(this).attr('data-work');
+
+				$.ajax({
+					url: './json/works.json'
+				}).done(function (data) {
+					$(data.works).each(function (k, v) {
+						if ($data == v.data) {} else {
+							console.log('Error');
+						}
+					});
+				});
+			});
+		}
+	};
+
+	var triggerLayout = function triggerLayout() {
+		var $grid = $('.grid');
+
+		$grid.masonry({
+			itemSelector: '.grid-item',
+			columnWidth: '.grid-sizer',
+			percentPosition: true
 		});
 	};
 

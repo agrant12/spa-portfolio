@@ -1,13 +1,41 @@
-{"works": {
-  "name": "A Styled Mind",
-  "mainphoto": "File",
-  "tags": "UI/UX, Wordpress",
-  "data": "asm",
-  "popup": {
-    "menuitem": [
-      {"value": ""},
-      {"value": ""},
-      {"value": ""}
-    ]
-  }
-}}
+{
+"works":[
+	{
+		"name": "MediaBistro",
+		"mainphoto": " ",
+		"tags": "Full Stack Development, Wordpress",
+		"data": "mb"
+	},
+	{
+		"name": "CBSLocal",
+		"mainphoto": " ",
+		"tags": "Full Stack Development, Wordpress",
+		"data": "cbs"
+	},
+	{
+		"name": "A Styled Mind", 
+		"mainphoto": " ",
+		"tags": "UI/UX, Wordpress, Photography",
+		"data": "asm",
+		"description": ""
+    },
+	{
+		"name": "Tincan RV",
+		"mainphoto": " ",
+		"tags": "API Development, Laravel",
+		"data": "tincan"
+	},
+	{
+		"name": "Man vs. Machine",
+		"mainphoto": " ",
+		"tags": "Flash",
+		"data": "mvm"
+	},
+	    {
+    	"name": "Ezylivin", 
+		"mainphoto": " ",
+		"tags": "UI/UX, Wordpress",
+		"data": "ezy"
+    }
+]
+}

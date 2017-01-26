@@ -267,3 +267,43 @@
   margin: 0;
   text-align: center;
 }
+
+.wrapper main #works {
+  padding: 0 150px;
+}
+
+.wrapper main #works h3 {
+  text-align: center;
+}
+
+.wrapper main #works .grid {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.wrapper main #works .grid .grid-sizer,.wrapper main #works .grid .grid-item {
+  width: 30%;
+}
+
+.wrapper main #works .grid .grid-item {
+  border: 1px solid #000;
+  height: 300px;
+  margin: 10px 5px;
+  opacity: 0;
+}
+
+.wrapper main #works .grid .grid-item .name {
+  position: relative;
+  width: 100px;
+}
