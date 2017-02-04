@@ -16,20 +16,47 @@ let app = (function() {
 		let line1 = document.querySelector('.line1'),
 			line2 = document.querySelector('.line2'),
 			line3 = document.querySelector('.line3'),
-			menuIcon = document.querySelectorAll('.menu-icon'),
+			menuIcon = document.querySelector('.menu-icon'),
+			menuIconSpan = document.querySelectorAll('.menu-icon span'),
+			branding = document.querySelector('.branding a h1'),
 			nav = document.getElementById('nav'),
 			clicked = false;
 
-		for (var i = menuIcon.length - 1; i >= 0; i--) {
-			menuIcon[i].addEventListener('click', function() {
-				if (!clicked) {
-					nav.className += " slideRight";
-					clicked = true;
-				} else {
-					nav.className = " slideLeft"
-					clicked = false;
+		menuIcon.addEventListener('mouseover', function() {
+			addClass(line1, 'move-left');
+			addClass(line2, 'move-right');
+			addClass(line3, 'move-left');
+		});
+
+		menuIcon.addEventListener('mouseout', function() {
+			removeClass(line1, 'move-left');
+			removeClass(line2, 'move-right');
+			removeClass(line3, 'move-left');
+		});
+
+		menuIcon.addEventListener('click', function() {
+			if (!clicked) {
+				$(nav).slideDown().css({'display': 'flex'});
+				for (var i = menuIconSpan.length - 1; i >= 0; i--) {
+					menuIconSpan[i].style.background = 'white';
 				}
-			});
+				branding.style.color = 'white';
+				clicked = true;
+			} else {
+				$(nav).slideUp();
+				for (var i = menuIconSpan.length - 1; i >= 0; i--) {
+					menuIconSpan[i].style.background = 'black';
+				}
+				branding.style.color = 'black';
+				clicked = false;
+			}
+		});
+	}
+
+	let socialIcons = function() {
+		let socialIcon = querySelectorAll('.social a');
+		for (var i = socialIcon.length - 1; i >= 0; i--) {
+
 		}
 	}
 
@@ -69,7 +96,6 @@ let app = (function() {
 
 	let getWorks = function() {
 		let $grid = $('.grid');
-			counter = 0;
 
 		$.ajax({
 			url: './json/works.json'
@@ -79,13 +105,9 @@ let app = (function() {
 					tags = v.tags,
 					image = v.mainphoto,
 					dataTag = v.data;
-					workBlock = "<div class='grid-item grid-item--width" + counter + " grid-item--height" + counter +"' data-work=" + dataTag + "><div class='name'>" + name + "</div><div class='tags'>" + tags + "</div><div class='image'><img src='" + image + "' /></div></div>";
+					workBlock = "<div class='grid-item' data-work=" + dataTag + "><div class='name'>" + name + "</div><div class='tags'>" + tags + "</div><div class='image'><img src='" + image + "' /></div></div>";
 
 				$grid.append(workBlock);
-				if (counter > 4) {
-					counter = 0;
-				}
-				counter++;
 			});
 		}).then(function() {
 			animateGrid();
@@ -111,13 +133,13 @@ let app = (function() {
 		
 		for (var i = item.length - 1; i >= 0; i--) {
 			item[i].addEventListener('click', function() {
-				let $data = $(this).attr('data-work');
+				let $dataTag = $(this).attr('data-work');
 				
 				$.ajax({
 					url: './json/works.json'
 				}).done(function(data) {
 					$(data.works).each(function(k, v) {
-						if ($data == v.data) {
+						if ($dataTag == v.data) {
 							
 						} else {
 							console.log('Error');
@@ -138,7 +160,16 @@ let app = (function() {
 		});
 		
 	}
+
+	// Helper Functions
+	let addClass = function(selector, className) {
+		selector.classList.add(className);
+	}
 	
+	let removeClass = function(selector, className) {
+		selector.classList.remove(className);
+	}
+
 	return {
 		init: function() {
 			// Application functions go here
