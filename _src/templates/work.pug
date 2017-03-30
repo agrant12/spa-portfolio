@@ -5,11 +5,12 @@ html
 		div.wrapper
 			include partials/header.pug
 			main
-				include partials/hero.pug
-				section(id="content")
-					include partials/about.pug
-					include partials/works.pug
-					include partials/photography.pug
+				section(id="work-item")
+					div(id="featured-image")
+					h1(class="title")
+					p(class="categories")
+					div(class="content")
+					div(class="images")
 			include partials/footer.pug
 			script(src='public/js/app.js', type='text/javascript')
 			script(src='public/js/google-analytics.js', type='text/javascript')

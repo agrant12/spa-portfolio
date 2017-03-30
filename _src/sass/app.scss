@@ -7,8 +7,11 @@ body {
 	padding: 0;
 }
 .container {
-	background-color: white;
 	//padding: 50px;
+}
+.page {
+	margin: 0 auto;
+	width: 1150px;
 }
 .wrapper {
 	height: 100%;
@@ -60,7 +63,7 @@ body {
 			right: 10%;
 			top: 8%;
 			width: 22px;
-			z-index: 501;
+			z-index: 5002;
 			span {
 				background-color: $black;
 				height: 3px;
@@ -105,7 +108,7 @@ body {
 			position: fixed;
 			top: 0;
 			width: 100%;
-			z-index: 500;
+			z-index: 50001;
 			.menu-icon {
 				left: 270px;
 				margin-bottom: 30px;
@@ -144,16 +147,53 @@ body {
 		}
 	}
 	footer {
-		bottom: 0;
-		display: none;
-		position: absolute;
+		background-color: #292929;
+		display: flex;
+		color: white;
+		flex-direction: row;
+		flex-wrap: wrap;
+		min-height: 200px;
+		padding: 35px 50px;
+		position: relative;
+		z-index: 5000;
+		.col {
+			padding: 20px;
+			width: calc(100%/4 - 50px);
+			a {
+				color: #666;
+				text-decoration: none;
+				&:hover {
+					color: $brand-blue;
+					text-decoration: none;
+					transition: color 0.5s;
+				}
+			}
+			h4 {
+				font-size: 14px;
+				font-weight: 400;
+				letter-spacing: 2px;
+				text-transform: uppercase;
+			}
+			h5 {
+				font-size: 12px;
+				font-weight: 400;
+				letter-spacing: 2px;
+			}
+			p {
+				font-size: 12px;
+				font-weight: 300;
+				letter-spacing: 2px;
+			}
+		}
 	}
 	main {
 		display: flex;
 		flex-direction: column;
 		#content {
-			position: absolute;
+			display: flex;
+			flex-direction: column;
 			width: 100%;
+			z-index: 5000;
 		}
 		#hero {
 			display: flex;
@@ -164,7 +204,6 @@ body {
 				align-self: center;
 				margin: 0 auto;
 				text-align: center;
-				text-transform: uppercase;
 				h3 {
 					font-size: 100px;
 					font-weight: 700;
@@ -172,48 +211,199 @@ body {
 				}
 				.name {
 					color: #79a1e3;
-					font-size: 50px;
-					font-weight: 500;
+					font-size: 70px;
+					font-weight: 400;
 					letter-spacing: 10px;
 					margin: 10px;
+					text-transform: uppercase;
+					span {
+						font-weight: 300;
+					}
 				}
 				.occupation {
 					font-weight: 400;
-					font-size: 18px;
 					letter-spacing: 2px;
+				}
+			}
+			.social {
+				position: fixed;
+				right: 13%;
+				top: 8%;
+				z-index: 5000;
+				a {
+					color: black;
+					margin: 0 10px;
+					&:hover {
+						color: $brand-blue;
+					}
 				}
 			}
 		}
 		#about {
 			background-color: white;
-			display: flex;
-			padding: 125px 0;
-			.block {
+			padding: 90px 0;
+			.col {
+				padding: 10px 50px;
+				width: 50%;
+			}
+			div#counter {
+				display: flex;
+				justify-content: center;
+				p#count {
+					font-size: 72px;
+					font-weight: 700;
+					margin: 0px;
+				}
+				p.years {
+					color: #79a1e3;
+					font-size: 48px;
+					margin: 18px;
+					text-transform: uppercase;
+				}
+			}
+			p.copy {
+				margin: 0;
+				text-align: center;
+			}
+			.skills-bar {
+				height: 300px;
+				margin-top: 30px;
+				width: 25%;
+				svg {
+					overflow: visible !important;
+					line {
+						stroke-width: 10;
+						stroke: #fff;
+						fill: none;
+						-webkit-transition: -webkit-transform .8s ease-out;
+						transition: transform .8s ease-out;
+						transition-delay: .3s;
+					}
+				}
+			}
+			.skills-bar > svg line.html-empty,
+			.skills-bar > svg line.css-empty,
+			.skills-bar > svg line.js-empty,
+			.skills-bar > svg line.python-empty,
+			.skills-bar > svg line.php-empty,
+			.skills-bar > svg line.mysql-empty {
+				stroke: #EBE7E4;
+			}
+			.skills-bar > svg line.html,
+			.skills-bar > svg line.css,
+			.skills-bar > svg line.js,
+			.skills-bar > svg line.python,
+			.skills-bar > svg line.php,
+			.skills-bar > svg line.mysql {
+				stroke: $brand-blue;
+				transform: translateX(-50px);
+			}
+		
+		}
+		#photography {
+			background-color: white;
+			min-height: 300px;
+			h3 {
+				font-size: 14px;
+				letter-spacing: 2px;
+				margin: 20px 0;
+				text-align: center;
+				text-transform: uppercase;
+			}
+			.photography-posts {
+				display: flex;
+				justify-content: flex-start;
+				flex-direction: row;
+				flex-wrap: wrap;
+				.post {
+					flex-grow: 1;
+					width: calc(100%/2);
+				}	
+			}
+		}
+		#work-item {
+			margin-top: 150px;
+			h1.title {
+				letter-spacing: 2px;
+				text-align: center;
+				text-transform: uppercase;
+			}
+			#featured-image {
+				height: 551px;
 				margin: 0 auto;
-				div#counter {
-					display: flex;
-					p#count {
-						font-size: 72px;
-						font-weight: 700;
-						margin: 0px;
-					}
-					p.years {
-						color: #79a1e3;
-						font-size: 48px;
-						margin: 18px;
-						text-transform: uppercase;
-					}
+				overflow: hidden;
+				padding: 3.75em 5.3125em;
+				img {
+					width: 100%;
 				}
-				p.copy {
-					margin: 0;
-					text-align: center;
-				}
+			}
+			.content {
+				padding: 3.75em 5.3125em;
 			}
 		}
 		#works {
-			padding: 0 150px;
+			background-color: white;
+			min-height: 300px;
+			padding: 100px 30px;
 			h3 {
+				font-size: 14px;
+				letter-spacing: 2px;
+				margin: 20px 0;
 				text-align: center;
+				text-transform: uppercase;
+			}
+			.work-posts {
+				display: flex;
+				justify-content: flex-start;
+				flex-direction: row;
+				flex-wrap: wrap;
+				.post {
+					cursor: pointer;
+					flex-grow: 1;
+					height: 198px;
+					margin: 10px;
+					position: relative;
+					overflow: hidden;
+					width: calc(100%/3 - 40px);
+					a {
+						display: block;
+						height: 100%;
+						width: 100%;
+						&:hover > .overlay {
+							opacity: 1;
+							transition: opacity 0.5s;
+						}
+						&:hover > .title {
+							bottom: 30px;
+							opacity: 1;
+							transition: bottom 0.5s, opacity 0.5s;
+						}
+						.title {
+							color: white;
+							font-weight: 500;
+							bottom: 0;
+							position: absolute;
+							opacity: 0;
+							text-align: center;
+							width: 100%;
+							z-index: 500;
+						}
+						.featured-image {
+							overflow: hidden;
+							width: 100%;
+							img {
+								width: 100%;
+							}
+						}
+						.overlay {
+							background-color: rgba(0, 0, 0, 0.8);
+							height: 100%;
+							position: absolute;
+							opacity: 0;
+							width: 100%;
+						}
+					}
+				}
 			}
 			.grid {
 				cursor: pointer;

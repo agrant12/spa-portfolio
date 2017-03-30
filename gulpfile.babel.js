@@ -8,37 +8,30 @@ var gulp = require('gulp'),
 	cssnano = require('gulp-cssnano'),
 	babel = require('gulp-babel'),
 	concat = require('gulp-concat'),
-	imagemin = require('gulp-imagemin'),
 	cmq = require('gulp-combine-mq'),
 	rename = require('gulp-rename'),
 	add = require('gulp-add-src'),
 	pug = require('gulp-pug');
 
-const dirs = {
+var dirs = {
 	src:    './_src/',
 	build:  './public'
 },
 
 styles = {
-	src:    `${dirs.src}/sass`,
-	build:  `${dirs.build}/css`
+	src:    '${dirs.src}/sass',
+	build:  './public/css'
 },
 
 scripts = {
-	src:    `${dirs.src}/scripts`,
-	build:  `${dirs.build}/js`
-},
-
-images = {
-	src:    `${dirs.src}/images`,
-	build:  `${dirs.build}/images`   
+	src:    '${dirs.src}/scripts',
+	build:  './public/js'
 },
 
 templates = {
 	src:    '${dirs.src}/templates',
 	build:  '../'
 };
-
 
 /*
  *  CSS task
@@ -47,17 +40,15 @@ templates = {
 
 	console.log('starting task: [styles]');
 
-	gulp.src(`${styles.src}/app.scss`)
+	gulp.src('./_src/sass/app.scss')
 	.pipe(sass({errLogToConsole: true}))
-	.pipe(autoprefixer('last 8 version'))
+	//.pipe(autoprefixer('last 8 version'))
 	.pipe(cmq())
 	.pipe(gulp.dest(styles.build))
-	.pipe(cssnano())
+	//.pipe(cssnano())
 	.pipe(rename({ suffix: '.min' }))
 	.pipe(gulp.dest(styles.build));
 });
-
-
 
 /*
  *  JS task
@@ -68,53 +59,54 @@ templates = {
 	
 	// Custom JS
 	gulp.src([
-		`${scripts.src}/libs/tweenmax.min.js`,
-		`${scripts.src}/libs/jquery-3.1.1.min.js`,
-		`${scripts.src}/libs/masonry.js`,
-		`${scripts.src}/app.js`
+		'./_src/scripts/libs/tweenmax.min.js',
+		'./_src/scripts/libs/jquery-3.1.1.min.js',
+		'./_src/scripts/libs/masonry.js',
+		'./_src/scripts/app.js'
 		])
-	.pipe(babel({presets: ['es2015']}))
-	.pipe(add.prepend(`${scripts.src}/libs/jquery-3.1.1.min.js`))
-	.pipe(add.prepend(`${scripts.src}/libs/tweenmax.min.js`))
-	.pipe(add.prepend(`${scripts.src}/libs/masonry.js`))
+	.pipe(babel({presets: ['es2016']}))
+	.pipe(add.prepend('./_src/scripts/libs/jquery-3.1.1.min.js'))
+	.pipe(add.prepend('./_src/scripts/libs/tweenmax.min.js'))
+	.pipe(add.prepend('./_src/scripts/libs/masonry.js'))
 	.pipe(concat('app.js'))
 	.pipe(gulp.dest(scripts.build))
 	.pipe(concat('app.js'))
 	.pipe(uglify())
 	.pipe(rename({ suffix: '.min' }))
-	.pipe(gulp.dest(scripts.build));
-});
-
-
-/*
- *  IMAGE minificatiooooon
- */
- gulp.task('images', function() {
-
-	console.log('starting task: [images]');
-
-	gulp.src(`${images.src}/*`)
-	.pipe(imagemin())
-	.pipe(gulp.dest(images.build))
+	.pipe(gulp.dest('./public/js'));
 });
 
 gulp.task('templates', function() {
 	gulp.src('./_src/templates/index.pug')
 	.pipe(pug())
 	.pipe(rename({extname:'.html'}))
-	.pipe(gulp.dest('./'))
+	.pipe(gulp.dest('./'));
+	gulp.src('./_src/templates/about.pug')
+	.pipe(pug())
+	.pipe(rename({extname:'.html'}))
+	.pipe(gulp.dest('./'));
+	gulp.src('./_src/templates/blog.pug')
+	.pipe(pug())
+	.pipe(rename({extname:'.html'}))
+	.pipe(gulp.dest('./'));
+	gulp.src('./_src/templates/photography.pug')
+	.pipe(pug())
+	.pipe(rename({extname:'.html'}))
+	.pipe(gulp.dest('./'));
+	gulp.src('./_src/templates/work.pug')
+	.pipe(pug())
+	.pipe(rename({extname:'.html'}))
+	.pipe(gulp.dest('./'));
 });
-
 
 /*
  *  WATCH tasks to serve up
  */
  gulp.task('watch', ['styles', 'scripts', 'templates'], function() {
-	gulp.watch(`${styles.src}/**/*.scss`, ['styles']);
-	gulp.watch(`${scripts.src}/**/*.js`, ['scripts']);
-	gulp.watch(`${templates.src}/**/*.pug`, ['templates']);
+	gulp.watch('${styles.src}/**/*.scss', ['styles']);
+	gulp.watch('${scripts.src}/**/*.js', ['scripts']);
+	gulp.watch('${templates.src}/**/*.pug', ['templates']);
 });
-
 
 /*
  *  DEFAULT tasks to serve up

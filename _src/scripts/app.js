@@ -1,9 +1,106 @@
 'use strict';
 
-let app = (function() {
-	
-	let heroHeight = function() {
-		let $wh = window.innerHeight,
+var app = (function() {
+
+	var getPosts = function(number, category) {
+		if (number === undefined) {
+			number = 10;
+		}
+		var posts = [],
+			siteUrl = 'http://alvin.dml.com/wp-json/wp/v2/posts/';
+		var settings = {
+			"async": true,
+			"crossDomain": true,
+			"url": siteUrl + "?per_page=" + number + '&category=' + category,
+			"method": "GET",
+			"headers": {
+				
+			}
+		}
+		$.ajax(settings).done(function(data) {
+			var d = data;
+			console.log(data);
+			return data;
+			/*for (var value of data) {
+				var title = value.title.rendered;
+				posts.push("<div class='post'><h3 class='title'>" + title + "</h3></div>");
+			}*/
+		});
+	}
+
+	var selectedWorks = function() {
+		var	siteUrl = 'http://alvin.dml.com/wp-json/wp/v2/posts';
+		var settings = {
+			"async": true,
+			"crossDomain": true,
+			"url": siteUrl + "?per_page=6&categories=117",
+			"method": "GET",
+			"headers": {
+				
+			}
+		}
+		$.ajax(settings).done(function(data) {
+			var d = data;
+			for (var value of data) {
+				var title = value.title.rendered,
+					id = value.id,
+					image = value.better_featured_image.source_url,
+					work = "<div class='post'><a href='work.html#" + id + "' class='data-post' data-post-id=" + id + "><h4 class='title'>" + title + "</h4><div class='overlay'></div><div class='featured-image'><img src=" + image +" /></div></a></div>";
+				$('.work-posts').append(work);
+			}
+		});
+	}
+
+	var getPostsFooter = function() {
+		var	siteUrl = 'http://alvin.dml.com/wp-json/wp/v2/posts';
+		var settings = {
+			"async": true,
+			"crossDomain": true,
+			"url": siteUrl + "?per_page=5&categories=118",
+			"method": "GET",
+			"headers": {
+				
+			}
+		}
+		$.ajax(settings).done(function(data) {
+			var d = data;
+			for (var value of data) {
+				var title = value.title.rendered,
+					id = value.id,
+					post = "<div class='post'><h5 class='title'><a href='blog.html#" + id + "' class='data-post' data-post-id=" + id + ">" + title + "</a></h5></div>";
+				$('#footer-post').append(post);
+			}
+		});
+	}
+
+	var displayPost = function() {
+		var hash = window.location.hash;
+
+		if (hash) {
+			id = hash.replace('#','');
+			var	siteUrl = 'http://alvin.dml.com/wp-json/wp/v2/posts';
+			var settings = {
+				"async": true,
+				"crossDomain": true,
+				"url": siteUrl + "/" + id,
+				"method": "GET",
+				"headers": {
+					
+				}
+			}
+			$.ajax(settings).done(function(data) {
+				var title = data.title.rendered,
+					image = data.better_featured_image.source_url,
+					content = data.content.rendered;
+				$('h1.title').append(title);
+				$('#featured-image').append('<img src="' + image + '" />');
+				$('div.content').append(content);
+			});
+		}
+	}
+
+	var heroHeight = function() {
+		var $wh = window.innerHeight,
 			$hero = $('#hero'),
 			$container = $('.container');
 			$content = $('#content');
@@ -12,8 +109,8 @@ let app = (function() {
 		$content.css({'margin-top': $wh});
 	}
 
-	let showMenu = function() {
-		let line1 = document.querySelector('.line1'),
+	var showMenu = function() {
+		var line1 = document.querySelector('.line1'),
 			line2 = document.querySelector('.line2'),
 			line3 = document.querySelector('.line3'),
 			menuIcon = document.querySelector('.menu-icon'),
@@ -36,14 +133,14 @@ let app = (function() {
 
 		menuIcon.addEventListener('click', function() {
 			if (!clicked) {
-				$(nav).slideDown().css({'display': 'flex'});
+				$(nav).fadeIn().css({'display': 'flex'});
 				for (var i = menuIconSpan.length - 1; i >= 0; i--) {
 					menuIconSpan[i].style.background = 'white';
 				}
 				branding.style.color = 'white';
 				clicked = true;
 			} else {
-				$(nav).slideUp();
+				$(nav).fadeOut();
 				for (var i = menuIconSpan.length - 1; i >= 0; i--) {
 					menuIconSpan[i].style.background = 'black';
 				}
@@ -53,15 +150,8 @@ let app = (function() {
 		});
 	}
 
-	let socialIcons = function() {
-		let socialIcon = querySelectorAll('.social a');
-		for (var i = socialIcon.length - 1; i >= 0; i--) {
-
-		}
-	}
-
-	let counterAnimation = function() {
-		let tl = new TimelineMax(),
+	var counterAnimation = function() {
+		var tl = new TimelineMax(),
 			counter = { var: 0 },
 			count = document.getElementById('count');
 		
@@ -75,14 +165,61 @@ let app = (function() {
 					onComplete: function() {
 
 					},
+					delay: 1,
 					ease: Circ.easeOut
 				}, '+=0.5');
 			}
 		});
 	}
 
-	let visibleElement = function(selector) {
-		let box = selector.getBoundingClientRect(),
+	var skillsBar = function() {
+		var skills = document.querySelector('.skills-bar');
+		window.addEventListener('scroll', function() {
+			if (visibleElement(skills) == true) {
+				TweenLite.to('.html', 0.5, {attr:{x2:200}, delay: 0.5, ease:Linear.easeNone});
+				TweenLite.to('.css', 0.5, {attr:{x2:200}, delay: 1.0, ease:Linear.easeNone});
+				TweenLite.to('.js', 0.5, {attr:{x2:185}, delay: 0.9, ease:Linear.easeNone});
+				TweenLite.to('.python', 0.5, {attr:{x2:160}, delay: 1.1, ease:Linear.easeNone});
+				TweenLite.to('.php', 0.5, {attr:{x2:193}, delay: 1.0, ease:Linear.easeNone});
+				TweenLite.to('.mysql', 0.5, {attr:{x2:170}, delay: 1.3, ease:Linear.easeNone});
+			}
+		});
+	}
+
+	var animateGrid = function() {
+		var tl = new TimelineMax();
+			works = document.getElementById('works')
+			$items = $('.grid-item');
+
+		window.addEventListener('scroll', function() {
+			if (visibleElement(works) == true) {
+				tl.staggerTo($items, 0.5, {opacity: 1}, '0.2');
+			}
+		});
+	}
+
+	var triggerLayout = function() {
+		var $grid = $('.grid');
+
+		$grid.masonry({
+			itemSelector: '.grid-item',
+			columnWidth: '.grid-sizer',
+			percentPosition: true
+		});
+		
+	}
+
+	// Helper Functions
+	var addClass = function(selector, className) {
+		selector.classList.add(className);
+	}
+	
+	var removeClass = function(selector, className) {
+		selector.classList.remove(className);
+	}
+
+	var visibleElement = function(selector) {
+		var box = selector.getBoundingClientRect(),
 			w = window.innerHeight,
 			top = w - box.top,
 			bottom = w - box.bottom;
@@ -94,89 +231,15 @@ let app = (function() {
 		}
 	}
 
-	let getWorks = function() {
-		let $grid = $('.grid');
-
-		$.ajax({
-			url: './json/works.json'
-		}).done(function(data) {
-			$(data.works).each(function(k, v) {
-				let name = v.name,
-					tags = v.tags,
-					image = v.mainphoto,
-					dataTag = v.data;
-					workBlock = "<div class='grid-item' data-work=" + dataTag + "><div class='name'>" + name + "</div><div class='tags'>" + tags + "</div><div class='image'><img src='" + image + "' /></div></div>";
-
-				$grid.append(workBlock);
-			});
-		}).then(function() {
-			animateGrid();
-		}).then(function() {
-			workItem();
-		});
-	}
-
-	let animateGrid = function() {
-		let tl = new TimelineMax();
-			works = document.getElementById('works')
-			$items = $('.grid-item');
-
-		window.addEventListener('scroll', function() {
-			if (visibleElement(works) == true) {
-				tl.staggerTo($items, 0.5, {opacity: 1}, '0.2');
-			}
-		});
-	}
-
-	let workItem = function() {
-		let item = document.querySelectorAll('.grid-item');
-		
-		for (var i = item.length - 1; i >= 0; i--) {
-			item[i].addEventListener('click', function() {
-				let $dataTag = $(this).attr('data-work');
-				
-				$.ajax({
-					url: './json/works.json'
-				}).done(function(data) {
-					$(data.works).each(function(k, v) {
-						if ($dataTag == v.data) {
-							
-						} else {
-							console.log('Error');
-						}
-					});
-				});
-			});
-		}
-	}
-
-	let triggerLayout = function() {
-		let $grid = $('.grid');
-
-		$grid.masonry({
-			itemSelector: '.grid-item',
-			columnWidth: '.grid-sizer',
-			percentPosition: true
-		});
-		
-	}
-
-	// Helper Functions
-	let addClass = function(selector, className) {
-		selector.classList.add(className);
-	}
-	
-	let removeClass = function(selector, className) {
-		selector.classList.remove(className);
-	}
-
 	return {
 		init: function() {
 			// Application functions go here
 			heroHeight();
 			showMenu();
 			counterAnimation();
-			getWorks();
+			selectedWorks();
+			getPostsFooter();
+			displayPost();
 		}
 	}
 
