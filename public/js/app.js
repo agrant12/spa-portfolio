@@ -4286,30 +4286,6 @@ var _gsScope = "undefined" != typeof module && module.exports && "undefined" != 
 
 var app = function () {
 
-	var getPosts = function (number, category) {
-		if (number === undefined) {
-			number = 10;
-		}
-		var posts = [],
-		    siteUrl = 'http://alvin.dml.com/wp-json/wp/v2/posts/';
-		var settings = {
-			"async": true,
-			"crossDomain": true,
-			"url": siteUrl + "?per_page=" + number + '&category=' + category,
-			"method": "GET",
-			"headers": {}
-		};
-		$.ajax(settings).done(function (data) {
-			var d = data;
-			console.log(data);
-			return data;
-			/*for (var value of data) {
-   	var title = value.title.rendered;
-   	posts.push("<div class='post'><h3 class='title'>" + title + "</h3></div>");
-   }*/
-		});
-	};
-
 	var selectedWorks = function () {
 		var siteUrl = 'http://alvin.dml.com/wp-json/wp/v2/posts';
 		var settings = {
@@ -4385,6 +4361,24 @@ var app = function () {
 		$content.css({ 'margin-top': $wh });
 	};
 
+	var menuFadeIn = function () {
+		var menu = document.querySelector('.wrapper header'),
+		    intro = document.querySelector('#intro');
+		removeClass(intro, 'fadeIn');
+		addClass(intro, 'fadeOut');
+		removeClass(menu, 'fadeOut');
+		addClass(menu, 'fadeIn');
+	};
+
+	var menuFadeOut = function () {
+		var menu = document.querySelector('.wrapper header'),
+		    intro = document.querySelector('#intro');
+		addClass(intro, 'fadeIn');
+		removeClass(intro, 'fadeOut');
+		addClass(menu, 'fadeOut');
+		removeClass(menu, 'fadeIn');
+	};
+
 	var showMenu = function () {
 		var line1 = document.querySelector('.line1'),
 		    line2 = document.querySelector('.line2'),
@@ -4433,32 +4427,35 @@ var app = function () {
 
 		window.addEventListener('scroll', function () {
 			if (visibleElement(count) == true) {
+				menuFadeIn();
 				tl.to(counter, 0.8, {
 					var: 9,
 					onUpdate: function () {
 						$(count).html(Math.ceil(counter.var));
 					},
 					onComplete: function () {},
-					delay: 1,
+					delay: 0.5,
 					ease: Circ.easeOut
 				}, '+=0.5');
+			} else if (visibleElement(count) == false) {
+				menuFadeOut();
 			}
 		});
 	};
 
-	var skillsBar = function () {
-		var skills = document.querySelector('.skills-bar');
-		window.addEventListener('scroll', function () {
-			if (visibleElement(skills) == true) {
-				TweenLite.to('.html', 0.5, { attr: { x2: 200 }, delay: 0.5, ease: Linear.easeNone });
-				TweenLite.to('.css', 0.5, { attr: { x2: 200 }, delay: 1.0, ease: Linear.easeNone });
-				TweenLite.to('.js', 0.5, { attr: { x2: 185 }, delay: 0.9, ease: Linear.easeNone });
-				TweenLite.to('.python', 0.5, { attr: { x2: 160 }, delay: 1.1, ease: Linear.easeNone });
-				TweenLite.to('.php', 0.5, { attr: { x2: 193 }, delay: 1.0, ease: Linear.easeNone });
-				TweenLite.to('.mysql', 0.5, { attr: { x2: 170 }, delay: 1.3, ease: Linear.easeNone });
-			}
-		});
-	};
+	/*var skillsBar = function() {
+ 	var skills = document.querySelector('.skills-bar');
+ 	window.addEventListener('scroll', function() {
+ 		if (visibleElement(skills) == true) {
+ 			TweenLite.to('.html', 0.5, {attr:{x2:200}, delay: 0.5, ease:Linear.easeNone});
+ 			TweenLite.to('.css', 0.5, {attr:{x2:200}, delay: 1.0, ease:Linear.easeNone});
+ 			TweenLite.to('.js', 0.5, {attr:{x2:185}, delay: 0.9, ease:Linear.easeNone});
+ 			TweenLite.to('.python', 0.5, {attr:{x2:160}, delay: 1.1, ease:Linear.easeNone});
+ 			TweenLite.to('.php', 0.5, {attr:{x2:193}, delay: 1.0, ease:Linear.easeNone});
+ 			TweenLite.to('.mysql', 0.5, {attr:{x2:170}, delay: 1.3, ease:Linear.easeNone});
+ 		}
+ 	});
+ }*/
 
 	var animateGrid = function () {
 		var tl = new TimelineMax();
@@ -4497,7 +4494,7 @@ var app = function () {
 		    top = w - box.top,
 		    bottom = w - box.bottom;
 
-		if (top > 0) {
+		if (top > 100) {
 			return true;
 		} else {
 			return false;

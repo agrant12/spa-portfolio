@@ -2922,6 +2922,7 @@ body {
   margin: 0 auto;
   padding: 20px;
   position: fixed;
+  opacity: 0;
   width: 1150px;
   z-index: 500;
 }
@@ -3058,14 +3059,14 @@ body {
   color: #79a1e3;
 }
 
-.wrapper header .slideLeft {
-  right: -350px !important;
-  transition: right .2s;
+.wrapper .fadeIn {
+  opacity: 1;
+  transition: opacity 0.5s;
 }
 
-.wrapper header .slideRight {
-  right: 0 !important;
-  transition: right .2s;
+.wrapper .fadeOut {
+  opacity: 0;
+  transition: opacity 0.5s;
 }
 
 .wrapper footer {
@@ -3128,16 +3129,26 @@ body {
 }
 
 .wrapper main #hero {
+  background-size: cover;
   display: flex;
   align-items: center;
   position: fixed;
   width: 100%;
 }
 
+.wrapper main #hero .overlay {
+  background-color: rgba(255, 255, 255, 0.6);
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
 .wrapper main #hero #intro {
   align-self: center;
   margin: 0 auto;
   text-align: center;
+  z-index: 30;
 }
 
 .wrapper main #hero #intro h3 {
@@ -3181,7 +3192,7 @@ body {
 }
 
 .wrapper main #about {
-  background-color: white;
+  background-color: #f8f8f8;
   padding: 90px 0;
 }
 
