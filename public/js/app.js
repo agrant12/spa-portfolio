@@ -4296,14 +4296,66 @@ var app = function () {
 			"headers": {}
 		};
 		$.ajax(settings).done(function (data) {
-			var d = data;
+			var work_posts = document.querySelector('.work-posts');
 			for (var value of data) {
 				var title = value.title.rendered,
 				    id = value.id,
 				    image = value.better_featured_image.source_url,
-				    work = "<div class='post'><a href='work.html#" + id + "' class='data-post' data-post-id=" + id + "><h4 class='title'>" + title + "</h4><div class='overlay'></div><div class='featured-image'><img src=" + image + " /></div></a></div>";
-				$('.work-posts').append(work);
+				    work = "<div class='post'><a href='#" + title + "' class='data-post' data-post-id=" + id + "><h4 class='title'>" + title + "</h4><div class='overlay'></div><div class='featured-image'><img src=" + image + " /></div></a></div>";
+				$(work_posts).append(work);
 			}
+		}).then(function () {
+			workLinks();
+		});
+	};
+
+	var workLinks = function () {
+		var workLink = document.querySelectorAll('a.data-post');
+		for (var link of workLink) {
+			link.addEventListener('click', function () {
+				var id = this.getAttribute('data-post-id');
+				openLightBox(id);
+			});
+		}
+	};
+
+	var openLightBox = function (id) {
+		var siteUrl = 'http://alvin.dml.com/wp-json/wp/v2/posts',
+		    lightbox = document.querySelector('.lightbox'),
+		    body = document.getElementsByTagName('body')[0];
+		var settings = {
+			"async": true,
+			"crossDomain": true,
+			"url": siteUrl + "/" + id,
+			"method": "GET",
+			"headers": {}
+		};
+		$.ajax(settings).done(function (data) {
+			console.log(data);
+			var title = data.title.rendered;
+			$('.lightbox h3.title').append(title);
+		});
+		lightbox.style.display = 'block';
+		window.setTimeout(function () {
+			addClass(lightbox, 'fadeIn');
+		}, 300);
+	};
+
+	var closeLightbox = function () {
+		var close = document.querySelector('.lightbox a.close'),
+		    lightbox = document.querySelector('.lightbox'),
+		    title = document.querySelector('.lightbox h3.title');
+
+		close.addEventListener('click', function (e) {
+			e.preventDefault();
+
+			removeClass(lightbox, 'fadeIn');
+			addClass(lightbox, 'fadeOut');
+			window.setTimeout(function () {
+				lightbox.style.display = 'none';
+			}, 300);
+			// Clear Content
+			title.innerHTML = ' ';
 		});
 	};
 
@@ -4325,30 +4377,6 @@ var app = function () {
 				$('#footer-post').append(post);
 			}
 		});
-	};
-
-	var displayPost = function () {
-		var hash = window.location.hash;
-
-		if (hash) {
-			id = hash.replace('#', '');
-			var siteUrl = 'http://alvin.dml.com/wp-json/wp/v2/posts';
-			var settings = {
-				"async": true,
-				"crossDomain": true,
-				"url": siteUrl + "/" + id,
-				"method": "GET",
-				"headers": {}
-			};
-			$.ajax(settings).done(function (data) {
-				var title = data.title.rendered,
-				    image = data.better_featured_image.source_url,
-				    content = data.content.rendered;
-				$('h1.title').append(title);
-				$('#featured-image').append('<img src="' + image + '" />');
-				$('div.content').append(content);
-			});
-		}
 	};
 
 	var heroHeight = function () {
@@ -4443,24 +4471,10 @@ var app = function () {
 		});
 	};
 
-	/*var skillsBar = function() {
- 	var skills = document.querySelector('.skills-bar');
- 	window.addEventListener('scroll', function() {
- 		if (visibleElement(skills) == true) {
- 			TweenLite.to('.html', 0.5, {attr:{x2:200}, delay: 0.5, ease:Linear.easeNone});
- 			TweenLite.to('.css', 0.5, {attr:{x2:200}, delay: 1.0, ease:Linear.easeNone});
- 			TweenLite.to('.js', 0.5, {attr:{x2:185}, delay: 0.9, ease:Linear.easeNone});
- 			TweenLite.to('.python', 0.5, {attr:{x2:160}, delay: 1.1, ease:Linear.easeNone});
- 			TweenLite.to('.php', 0.5, {attr:{x2:193}, delay: 1.0, ease:Linear.easeNone});
- 			TweenLite.to('.mysql', 0.5, {attr:{x2:170}, delay: 1.3, ease:Linear.easeNone});
- 		}
- 	});
- }*/
-
 	var animateGrid = function () {
 		var tl = new TimelineMax();
 		works = document.getElementById('works');
-		$items = $('.grid-item');
+		$items = $('.wrapper main #works .work-posts .post');
 
 		window.addEventListener('scroll', function () {
 			if (visibleElement(works) == true) {
@@ -4509,7 +4523,7 @@ var app = function () {
 			counterAnimation();
 			selectedWorks();
 			getPostsFooter();
-			displayPost();
+			closeLightbox();
 		}
 	};
 }();
