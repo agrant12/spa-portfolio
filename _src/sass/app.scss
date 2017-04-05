@@ -18,9 +18,9 @@ body {
 	position: relative;
 	width: 100%;
 	header {
-		-webkit-box-shadow: 0px 2px 10px 0px rgba(158,158,158,1);
-		-moz-box-shadow: 0px 2px 10px 0px rgba(158,158,158,1);
-		box-shadow: 0px 2px 10px 0px rgba(158,158,158,1);
+		-webkit-box-shadow: 0px 2px 8px 0px rgba(158,158,158,1);
+		-moz-box-shadow: 0px 2px 8px 0px rgba(158,158,158,1);
+		box-shadow: 0px 2px 8px 0px rgba(158,158,158,1);
 		background-color: white;
 		display: flex;
 		flex-direction: row;
@@ -410,6 +410,7 @@ body {
 					height: 198px;
 					margin: 10px;
 					position: relative;
+					opacity: 0;
 					overflow: hidden;
 					width: calc(100%/3 - 40px);
 					@media screen and (max-width: 414px) {

@@ -24,6 +24,8 @@ var app = (function() {
 			}
 		}).then(function() {
 			workLinks();
+		}).then(function() {
+			animateGrid();
 		});
 	}
 
@@ -196,13 +198,13 @@ var app = (function() {
 	}
 
 	var animateGrid = function() {
-		var tl = new TimelineMax();
-			works = document.getElementById('works')
+		var tl = new TimelineMax(),
+			works = document.getElementById('works'),
 			$items = $('.wrapper main #works .work-posts .post');
 
 		window.addEventListener('scroll', function() {
 			if (visibleElement(works) == true) {
-				tl.staggerTo($items, 0.5, {opacity: 1}, '0.2');
+				tl.staggerTo($items, 0.5, {opacity: 1, delay: 0.5}, '0.5');
 			}
 		});
 	}
@@ -233,7 +235,7 @@ var app = (function() {
 			top = w - box.top,
 			bottom = w - box.bottom;
 
-		if (top > 100) {
+		if (top > 200) {
 			return true;
 		} else {
 			return false;
