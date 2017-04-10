@@ -4297,6 +4297,9 @@ var app = function () {
 		};
 		$.ajax(settings).done(function (data) {
 			var work_posts = document.querySelector('.work-posts');
+
+			savePostData(data);
+
 			for (var value of data) {
 				var title = value.title.rendered,
 				    id = value.id,
@@ -4321,6 +4324,13 @@ var app = function () {
 		}
 	};
 
+	// Save data to local storage
+	var savePostData = function (data) {
+		for (var post of data) {
+			localStorage.setItem(post.id, post);
+		}
+	};
+
 	var openLightBox = function (id) {
 		var siteUrl = 'http://alvin.dml.com/wp-json/wp/v2/posts',
 		    lightbox = document.querySelector('.lightbox'),
@@ -4333,10 +4343,15 @@ var app = function () {
 			"headers": {}
 		};
 		$.ajax(settings).done(function (data) {
-			console.log(data);
-			var title = data.title.rendered;
+			var title = data.title.rendered,
+			    img = data.better_featured_image.source_url,
+			    content = data.content.rendered;
+
 			$('.lightbox h3.title').append(title);
+			$('.lightbox .featured-image img').attr('src', img);
+			$('.lightbox .content').append(content);
 		});
+		body.style.overflow = 'hidden';
 		lightbox.style.display = 'block';
 		window.setTimeout(function () {
 			addClass(lightbox, 'fadeIn');
@@ -4346,18 +4361,24 @@ var app = function () {
 	var closeLightbox = function () {
 		var close = document.querySelector('.lightbox a.close'),
 		    lightbox = document.querySelector('.lightbox'),
-		    title = document.querySelector('.lightbox h3.title');
+		    title = document.querySelector('.lightbox h3.title'),
+		    content = document.querySelector('.lightbox .content'),
+		    body = document.getElementsByTagName('body')[0];
 
 		close.addEventListener('click', function (e) {
 			e.preventDefault();
 
+			body.style.overflow = 'auto';
 			removeClass(lightbox, 'fadeIn');
 			addClass(lightbox, 'fadeOut');
+
 			window.setTimeout(function () {
 				lightbox.style.display = 'none';
 			}, 300);
+
 			// Clear Content
 			title.innerHTML = ' ';
+			content.innerHTML = ' ';
 		});
 	};
 
@@ -4456,7 +4477,7 @@ var app = function () {
 		    count = document.getElementById('count');
 
 		window.addEventListener('scroll', function () {
-			if (visibleElement(count) == true) {
+			if (visibleElement(count, 200) == true) {
 				menuFadeIn();
 				tl.to(counter, 0.8, {
 					var: 9,
@@ -4467,7 +4488,7 @@ var app = function () {
 					delay: 0.5,
 					ease: Circ.easeOut
 				}, '+=0.5');
-			} else if (visibleElement(count) == false) {
+			} else if (visibleElement(count, 200) == false) {
 				menuFadeOut();
 			}
 		});
@@ -4479,8 +4500,8 @@ var app = function () {
 		    $items = $('.wrapper main #works .work-posts .post');
 
 		window.addEventListener('scroll', function () {
-			if (visibleElement(works) == true) {
-				tl.staggerTo($items, 0.5, { opacity: 1, delay: 0.5 }, '0.5');
+			if (visibleElement(works, 150) == true) {
+				tl.staggerTo($items, 0.3, { opacity: 1, delay: 0.5 }, '0.3');
 			}
 		});
 	};
@@ -4495,22 +4516,28 @@ var app = function () {
 		});
 	};
 
-	// Helper Functions
+	/* 
+  *	Helper Functions
+  */
+
+	// Add class to DOM element
 	var addClass = function (selector, className) {
 		selector.classList.add(className);
 	};
 
+	// Remove class from DOM element
 	var removeClass = function (selector, className) {
 		selector.classList.remove(className);
 	};
 
-	var visibleElement = function (selector) {
+	// Check if DOM element is visible within Window object after set threshold
+	var visibleElement = function (selector, threshold) {
 		var box = selector.getBoundingClientRect(),
 		    w = window.innerHeight,
 		    top = w - box.top,
 		    bottom = w - box.bottom;
 
-		if (top > 200) {
+		if (top > threshold) {
 			return true;
 		} else {
 			return false;
@@ -4524,7 +4551,6 @@ var app = function () {
 			showMenu();
 			counterAnimation();
 			selectedWorks();
-			getPostsFooter();
 			closeLightbox();
 		}
 	};

@@ -1,7 +1,10 @@
 section(id="contact" class="container")
-	h3(class="title") Connect with me!
-	form
-		input
-		input
-		input
-		button Submit
+	h3(class="title") Lets talk!
+		i(class="fa fa-comments-o" aria-hidden="true")
+	div(class="form")
+		form(id="contact-form")
+			input(type="text" name="name" placeholder="Name")
+			input(type="text" name="email" placeholder="Email")
+			input(type="text" name="subject" placeholder="Subject")
+			textarea(name="message" form="contact-form" placeholder="Message")
+			input(type="submit")
