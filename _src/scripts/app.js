@@ -22,7 +22,9 @@ var app = (function() {
 				var title = value.title.rendered,
 					id = value.id,
 					image = value.better_featured_image.source_url,
-					work = "<div class='post'><a href='#" + title + "' class='data-post' data-post-id=" + id + "><h4 class='title'>" + title + "</h4><div class='overlay'></div><div class='featured-image'><img src=" + image +" /></div></a></div>";
+					tags = value.acf.project_type;
+
+				var	work = "<div class='post'><div class='data-post' data-post-id=" + id + "><h4 class='title'>" + title + "</h4><p class='tags'>" + tags + "</p><div class='overlay'></div><div class='featured-image'><img src=" + image +" /></div></div></div>";
 				$(work_posts).append(work);
 			}
 		}).then(function() {
@@ -33,7 +35,7 @@ var app = (function() {
 	}
 
 	var workLinks = function() {
-		var workLink = document.querySelectorAll('a.data-post');
+		var workLink = document.querySelectorAll('div.data-post');
 		for (var link of workLink) {
 			link.addEventListener('click', function() {
 				var id = this.getAttribute('data-post-id');
@@ -65,11 +67,18 @@ var app = (function() {
 		$.ajax(settings).done(function(data) {
 			var title = data.title.rendered,
 				img = data.better_featured_image.source_url,
-				content = data.content.rendered;
+				content = data.content.rendered,
+				gallery = data.acf.gallery,
+				tags = data.acf.project_type;
 
 			$('.lightbox h3.title').append(title);
 			$('.lightbox .featured-image img').attr('src', img);
 			$('.lightbox .content').append(content);
+			$('.lightbox .tags').append(tags);
+			for (image of gallery) {
+				var img = '<img src="' + image.sizes.medium_large + '" />';
+				$('.lightbox .gallery').append(img);
+			}
 		});
 		body.style.overflow = 'hidden';
 		lightbox.style.display = 'block';
@@ -83,6 +92,8 @@ var app = (function() {
 			lightbox = document.querySelector('.lightbox'),
 			title = document.querySelector('.lightbox h3.title'),
 			content = document.querySelector('.lightbox .content'),
+			gallery = document.querySelector('.lightbox .gallery'),
+			tags = document.querySelector('.lightbox .tags'),
 			body = document.getElementsByTagName('body')[0];
 
 		close.addEventListener('click', function(e) {
@@ -99,6 +110,8 @@ var app = (function() {
 			// Clear Content
 			title.innerHTML = ' ';
 			content.innerHTML = ' ';
+			gallery.innerHTML = ' ';
+			tags.innerHTML = ' ';
 		});
 	}
 
@@ -162,7 +175,7 @@ var app = (function() {
 			nav = document.getElementById('nav'),
 			clicked = false;
 
-		menuIcon.addEventListener('mouseover', function() {
+		/*menuIcon.addEventListener('mouseover', function() {
 			addClass(line1, 'move-left');
 			addClass(line2, 'move-right');
 			addClass(line3, 'move-left');
@@ -190,7 +203,7 @@ var app = (function() {
 				branding.style.color = 'black';
 				clicked = false;
 			}
-		});
+		});*/
 	}
 
 	var counterAnimation = function() {
