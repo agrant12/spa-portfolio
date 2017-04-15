@@ -3,11 +3,11 @@
 var app = (function() {
 
 	var selectedWorks = function() {
-		var	siteUrl = 'http://alvin.dml.com/wp-json/wp/v2/posts';
+		var	siteUrl = 'http://alvingrant.com/api/wp-json/wp/v2/posts';
 		var settings = {
 			"async": true,
 			"crossDomain": true,
-			"url": siteUrl + "?per_page=6&categories=117",
+			"url": siteUrl + "?per_page=6&categories=2",
 			"method": "GET",
 			"headers": {
 				
@@ -52,18 +52,19 @@ var app = (function() {
 	}
 
 	var openLightBox = function(id) {
-		var	siteUrl = 'http://alvin.dml.com/wp-json/wp/v2/posts',
+		var	siteUrl = 'http://alvingrant.com/api/wp-json/wp/v2/posts',
 			lightbox = document.querySelector('.lightbox'),
-			body = document.getElementsByTagName('body')[0];
-		var settings = {
-			"async": true,
-			"crossDomain": true,
-			"url": siteUrl + "/" + id,
-			"method": "GET",
-			"headers": {
-				
-			}
-		}
+			body = document.getElementsByTagName('body')[0],
+			overlay = document.querySelector('.body-overlay'),
+			settings = {
+				"async": true,
+				"crossDomain": true,
+				"url": siteUrl + "/" + id,
+				"method": "GET",
+				"headers": {
+					
+				}
+			};
 		$.ajax(settings).done(function(data) {
 			var title = data.title.rendered,
 				img = data.better_featured_image.source_url,
@@ -82,18 +83,21 @@ var app = (function() {
 		});
 		body.style.overflow = 'hidden';
 		lightbox.style.display = 'block';
+		overlay.style.display = 'block';
 		window.setTimeout(function() {
 			addClass(lightbox, 'fadeIn');
+			addClass(overlay, 'fadeIn');
 		}, 300);
 	}
 
 	var closeLightbox = function() {
-		var close = document.querySelector('.lightbox a.close'),
+		var close = document.querySelector('.lightbox div.close'),
 			lightbox = document.querySelector('.lightbox'),
 			title = document.querySelector('.lightbox h3.title'),
 			content = document.querySelector('.lightbox .content'),
 			gallery = document.querySelector('.lightbox .gallery'),
 			tags = document.querySelector('.lightbox .tags'),
+			overlay = document.querySelector('.body-overlay'),
 			body = document.getElementsByTagName('body')[0];
 
 		close.addEventListener('click', function(e) {
@@ -102,8 +106,12 @@ var app = (function() {
 			body.style.overflow = 'auto';
 			removeClass(lightbox, 'fadeIn');
 			addClass(lightbox, 'fadeOut');
+
+			removeClass(overlay, 'fadeIn');
+			addClass(overlay, 'fadeOut');
 			
 			window.setTimeout(function() {
+				overlay.style.display = 'none';
 				lightbox.style.display = 'none';
 			}, 300);
 
@@ -175,7 +183,7 @@ var app = (function() {
 			nav = document.getElementById('nav'),
 			clicked = false;
 
-		/*menuIcon.addEventListener('mouseover', function() {
+		menuIcon.addEventListener('mouseover', function() {
 			addClass(line1, 'move-left');
 			addClass(line2, 'move-right');
 			addClass(line3, 'move-left');
@@ -203,7 +211,7 @@ var app = (function() {
 				branding.style.color = 'black';
 				clicked = false;
 			}
-		});*/
+		});
 	}
 
 	var counterAnimation = function() {
@@ -243,15 +251,33 @@ var app = (function() {
 		});
 	}
 
-	var triggerLayout = function() {
-		var $grid = $('.grid');
+	var submitForm = function() {
+		var form = document.getElementById('ajax-form'),
+			messages = document.getElementById('messages');
 
-		$grid.masonry({
-			itemSelector: '.grid-item',
-			columnWidth: '.grid-sizer',
-			percentPosition: true
+		form.addEventListener('submit', function(e) {
+			e.preventDefault();
+			var formData = $(form).serialize();
+			
+			$.ajax({
+				type: 'POST',
+				url: $(form).attr('action'),
+				data: formData
+			}).done(function(response) {
+				// Make sure that the formMessages div has the 'success' class.
+				$(messages).removeClass('error');
+				$(messages).addClass('success');
+
+				// Set the message text.
+				$(messages).text(response);
+
+				// Clear the form.
+				$('#name').val('');
+				$('#email').val('');
+				$('#message').val('');
+			});
 		});
-		
+
 	}
 
 	/* 
@@ -286,10 +312,10 @@ var app = (function() {
 		init: function() {
 			// Application functions go here
 			heroHeight();
-			showMenu();
 			counterAnimation();
 			selectedWorks();
 			closeLightbox();
+			submitForm();
 		}
 	}
 
