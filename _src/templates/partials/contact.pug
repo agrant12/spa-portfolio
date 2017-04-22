@@ -1,10 +1,16 @@
 section(id="contact" class="container")
 	h3(class="title") Lets talk!
 		i(class="fa fa-comments-o" aria-hidden="true")
-	div(class="form")
-		form(id="contact-form")
-			input(type="text" name="name" placeholder="Name")
-			input(type="text" name="email" placeholder="Email")
-			input(type="text" name="subject" placeholder="Subject")
-			textarea(name="message" form="contact-form" placeholder="Message")
+	div(class="accent")
+	p(class="copy") Interested in working with me? Or just want to say ‘Hello’? Please use the contact form below or send me an email to 
+		a(href="mailto:alving.nyc@gmail.com") alving.nyc@gmail.com.
+		|  I will be in contact with you as soon as I can.
+	div(id="ajax-form" class="form")
+		form(id="contact-form" action="./process.php")
+			input(id="name" type="text" name="name" placeholder="Name" required=
+			required)
+			input(id="email" type="email" name="email" placeholder="Email" required="required")
+			input(id="subject" type="text" name="subject" placeholder="Subject" required="required")
+			textarea(id="message" name="message" form="contact-form" placeholder="Message" required="required")
 			input(type="submit")
+	div(id="messages")

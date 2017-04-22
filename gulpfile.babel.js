@@ -42,10 +42,14 @@ templates = {
 
 	gulp.src('./_src/sass/app.scss')
 	.pipe(sass({errLogToConsole: true}))
-	//.pipe(autoprefixer('last 8 version'))
-	.pipe(cmq())
+	.pipe(cmq({
+        beautify: false
+    }))
+    .pipe(autoprefixer({
+		browsers: ['last 2 versions'],
+		cascade: false
+	}))
 	.pipe(gulp.dest(styles.build))
-	//.pipe(cssnano())
 	.pipe(rename({ suffix: '.min' }))
 	.pipe(gulp.dest(styles.build));
 });
@@ -61,39 +65,22 @@ templates = {
 	gulp.src([
 		'./_src/scripts/libs/tweenmax.min.js',
 		'./_src/scripts/libs/jquery-3.1.1.min.js',
-		'./_src/scripts/libs/masonry.js',
+		'./_src/scripts/libs/scrollToPlugin.min.js',
 		'./_src/scripts/app.js'
 		])
 	.pipe(babel({presets: ['es2016']}))
 	.pipe(add.prepend('./_src/scripts/libs/jquery-3.1.1.min.js'))
 	.pipe(add.prepend('./_src/scripts/libs/tweenmax.min.js'))
-	.pipe(add.prepend('./_src/scripts/libs/masonry.js'))
+	.pipe(add.prepend('./_src/scripts/libs/scrollToPlugin.min.js'))
 	.pipe(concat('app.js'))
 	.pipe(gulp.dest(scripts.build))
 	.pipe(concat('app.js'))
-	.pipe(uglify())
 	.pipe(rename({ suffix: '.min' }))
 	.pipe(gulp.dest('./public/js'));
 });
 
 gulp.task('templates', function() {
 	gulp.src('./_src/templates/index.pug')
-	.pipe(pug())
-	.pipe(rename({extname:'.html'}))
-	.pipe(gulp.dest('./'));
-	gulp.src('./_src/templates/about.pug')
-	.pipe(pug())
-	.pipe(rename({extname:'.html'}))
-	.pipe(gulp.dest('./'));
-	gulp.src('./_src/templates/blog.pug')
-	.pipe(pug())
-	.pipe(rename({extname:'.html'}))
-	.pipe(gulp.dest('./'));
-	gulp.src('./_src/templates/photography.pug')
-	.pipe(pug())
-	.pipe(rename({extname:'.html'}))
-	.pipe(gulp.dest('./'));
-	gulp.src('./_src/templates/work.pug')
 	.pipe(pug())
 	.pipe(rename({extname:'.html'}))
 	.pipe(gulp.dest('./'));

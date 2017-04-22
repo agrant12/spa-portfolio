@@ -63,6 +63,9 @@ var app = (function() {
 				"method": "GET",
 				"headers": {
 					
+				},
+				complete: function() {
+					$('.lightbox #preloader_overlay').fadeOut(600);
 				}
 			};
 		$.ajax(settings).done(function(data) {
@@ -242,26 +245,27 @@ var app = (function() {
 	var animateGrid = function() {
 		var tl = new TimelineMax(),
 			works = document.getElementById('works'),
-			$items = $('.wrapper main #works .work-posts .post');
+			items = document.querySelectorAll('.work-posts .post');
 
 		window.addEventListener('scroll', function() {
 			if (visibleElement(works, 150) == true) {
-				tl.staggerTo($items, 0.3, {opacity: 1, delay: 0.5}, '0.3');
+				tl.staggerTo(items, 0.3, {opacity: 1, delay: 0.5}, '0.3');
 			}
 		});
 	}
 
 	var submitForm = function() {
-		var form = document.getElementById('ajax-form'),
+		var form = document.getElementById('contact-form'),
 			messages = document.getElementById('messages');
 
 		form.addEventListener('submit', function(e) {
 			e.preventDefault();
+
 			var formData = $(form).serialize();
-			
+
 			$.ajax({
 				type: 'POST',
-				url: $(form).attr('action'),
+				url: 'process.php',
 				data: formData
 			}).done(function(response) {
 				// Make sure that the formMessages div has the 'success' class.
@@ -274,10 +278,69 @@ var app = (function() {
 				// Clear the form.
 				$('#name').val('');
 				$('#email').val('');
+				$('#subject').val('');
 				$('#message').val('');
 			});
 		});
 
+	}
+
+	var preload = function() {
+		var loader = document.getElementById('preloader_overlay'),
+			tl = new TimelineMax(),
+			name = document.querySelector('.name'),
+			occupation = document.querySelector('.occupation'),
+			heroElements = document.querySelectorAll('.hero-element');
+
+		addClass(loader, 'fadeOut');
+		window.setTimeout(function() {
+			loader.style.display = 'none';
+		}, 900);
+
+		tl.to(name, 0.3, {scale: 1.1, opacity: 1, delay: 2.2, ease: Bounce.easeOut });
+		tl.to(name, 0.2, {scale: 1, delay: 0.2});
+		tl.to(occupation, 0.5, {opacity: 1, delay: 3}, '0.3');
+	}
+
+	var instagram = function() {
+		var settings = {
+			"async": true,
+			"crossDomain": true,
+			"url": "https://api.instagram.com/v1/users/self/media/recent/?access_token=217437600.65d63d0.6315713098514ed393b5373fca0f5393",
+			"method": "GET",
+			"contentType": "jsonp",
+			"headers": {
+
+			}
+		}
+
+		$.ajax(settings).done(function (response) {
+			console.log(response);
+		});
+	}
+
+	var aboutScroll = function() {
+		var tl = new TimelineMax(),
+			scroll_btn = document.getElementById('link-down'),
+			about = document.getElementById('about').getBoundingClientRect(),
+			header = document.getElementsByTagName('header')[0].clientHeight,
+			pos = about.top - header;
+
+		scroll_btn.addEventListener('click', function() {
+			tl.to(window, 0.5, {scrollTo: { y: pos }});
+		});
+	}
+
+	var animateTitle = function() {
+		var titles = document.querySelectorAll('.wrapper main section h3.title');
+		for (var title of titles) {
+			console.log(title);
+			window.addEventListener('scroll', function() {
+				if (visibleElement(title, 200) == true) {
+					addClass(title, 'fadeIn');
+				}
+			});
+		}
 	}
 
 	/* 
@@ -315,10 +378,14 @@ var app = (function() {
 			counterAnimation();
 			selectedWorks();
 			closeLightbox();
+			aboutScroll();
 			submitForm();
+			preload();
 		}
 	}
 
 })();
 
-app.init();
+$(document).ready(function() {
+	app.init();
+});

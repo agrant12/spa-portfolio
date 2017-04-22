@@ -14,15 +14,86 @@ a {
 		transition: color .5s;
 	}
 }
+
+/* Animated Preloader */
+#preloader_overlay {
+	align-content: center;
+	align-items: center;
+	background-color: white;
+	display: flex;
+	height: 100%;
+	position: fixed;
+	opacity: 1;
+	width: 100%;
+	z-index: 50000;
+}
+#preloader_1 {
+	left: 48%;
+	position: relative;
+	z-index: 100000;
+	@media screen and (max-width: 320px) {
+		left: 40%;
+	}
+	span {
+		display:block;
+		bottom:0px;
+		width: 9px;
+		height: 5px;
+		background: $brand-blue;
+		position:absolute;
+		animation: preloader_1 1.5s  infinite ease-in-out;
+	}
+}
+ 
+#preloader_1 span:nth-child(2){
+left:11px;
+animation-delay: .2s;
+ 
+}
+#preloader_1 span:nth-child(3){
+left:22px;
+animation-delay: .4s;
+}
+#preloader_1 span:nth-child(4){
+left:33px;
+animation-delay: .6s;
+}
+#preloader_1 span:nth-child(5){
+left:44px;
+animation-delay: .8s;
+}
+@keyframes preloader_1 {
+    0% {height:5px;transform:translateY(0px);background:$brand-blue;}
+    25% {height:30px;transform:translateY(15px);background:$secondary-blue;}
+    50% {height:5px;transform:translateY(0px);background:$secondary-blue;}
+    100% {height:5px;transform:translateY(0px);background:$brand-blue;}
+}
+
+.fadeIn {
+	opacity: 1 !important;
+	transition: opacity 0.5s;
+}
+.fadeOut {
+	animation-delay: 2s;
+	opacity: 0 !important;
+	transition: opacity 0.9s;
+	transition-timing-function: ease-in;
+}
+
+
 .wrapper {
 	height: 100%;
 	position: relative;
 	width: 100%;
+	 scroll-snap-points-y: repeat(100%);
+  scroll-snap-type: mandatory;
+  scroll-snap-destination: 100% 0%;
 	header {
+		align-items: center;
 		//-webkit-box-shadow: 0px 2px 8px 0px rgba(158,158,158,1);
 		//-moz-box-shadow: 0px 2px 8px 0px rgba(158,158,158,1);
 		//box-shadow: 0px 2px 8px 0px rgba(158,158,158,1);
-		background-color: rgba(255,255,255, 0.95);
+		background-color: rgba(255,255,255, 1);
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
@@ -33,13 +104,19 @@ a {
 		width: 100%;
 		z-index: 10000;
 		@media screen and (max-width: 1150px) {
-			padding: 50px 0;
+			padding: 30px 0;
 			width: 100%;
 		}
+		@media screen and (max-width: 375px) {
+			padding: 25px;
+		}
 		div.branding {
+			background: url(../images/ag_logo-300x197.png);
+			height: 33px;
 			position: fixed;
-			top: 5%;
+			top: 3%;
 			left: 10%;
+			width: 50px;
 			z-index: 10000;
 			@media screen and (max-width: 414px) {
 				left: 5%;
@@ -47,7 +124,10 @@ a {
 			}
 			a {
 				color: black;
+				display: block;
+				height: 100%;
 				text-decoration: none;
+				width: 100%;
 				h1 {
 					font-size: 24px;
 					margin: 0;
@@ -173,7 +253,7 @@ a {
 		color: white;
 		flex-direction: row;
 		flex-wrap: wrap;
-		min-height: 200px;
+		min-height: 50px;
 		padding: 35px 50px;
 		position: relative;
 		z-index: 5000;
@@ -181,8 +261,10 @@ a {
 			padding: 35px 20px;
 		}
 		.col {
+			flex-grow: 1;
 			padding: 20px;
-			width: calc(100%/4 - 50px);
+			text-align: center;
+			width: calc(100%/3 - 50px);
 			@media screen and (max-width: 414px) {
 				margin: 5px 25px;
 				padding: 0px;
@@ -201,7 +283,7 @@ a {
 				font-size: 14px;
 				font-weight: 400;
 				letter-spacing: 2px;
-				margin-top: 12px;
+				margin-top: 5px;
 				text-transform: uppercase;
 			}
 			h5 {
@@ -222,13 +304,19 @@ a {
 		section {
 			padding-top: 90px;
 			h3.title {
+				color: $secondary-blue;
 				font-size: 30px;
 				font-weight: 300;
 				letter-spacing: 2px;
 				margin: 20px 0;
-				margin-bottom: 20px;
+				margin-bottom: 0px;
 				text-align: center;
 				text-transform: uppercase;
+			}
+			div.accent {
+				border-top: 3px solid $brand-blue;
+				margin: 10px auto 50px;
+				width: 70px;
 			}
 		}
 		#content {
@@ -242,30 +330,37 @@ a {
 			background-size: cover;
 			display: flex;
 			align-items: center;
+			padding-top: 50px;
 			position: fixed;
 			width: $site-width;
 			#credit {
-				bottom: 115px;
+				bottom: 60px;
 				color: white;
-				font-size: 12px;
+				font-size: 11px;
 				font-weight: 400;
 				letter-spacing: 2px;
 				margin: 0 auto 0 auto;
 				position: absolute;
-				right: 25px;
+				right: 10px;
+				transition: all .5s;
 				width: 210px;
 				z-index: 500;
 				@media screen and (max-width: 414px) {
-					bottom: 105px;
+					bottom: 70px;
 					left: 0;
+					margin: 0 auto 0 auto;
 					right: 0;
 				}
 				a {
-					font-weight: 400;
+					color: white;
+					font-weight: 700;
+					&:hover {
+						color: $secondary-blue;
+					}
 				}
 			}
 			.overlay {
-				background-color: rgba(0,0,0, 0.4);
+				background-color: rgba(0,0,0, 0.3);
 				height: 100%;
 				position: absolute;
 				top: 0;
@@ -288,10 +383,17 @@ a {
 					font-weight: 400;
 					letter-spacing: 10px;
 					margin: 10px;
+					opacity: 0;
 					text-transform: uppercase;
-					@media screen and (max-width: 414px) {
+					@media screen and (max-width: 568px) {
 						font-size: 45px;
 						letter-spacing: 8px;
+					}
+					@media screen and (max-width: 375px) {
+						font-size: 35px;
+					}
+					@media screen and (max-width: 320px) {
+						font-size: 35px;
 					}
 					span {
 						font-weight: 300;
@@ -301,13 +403,15 @@ a {
 					color: white;
 					font-weight: 400;
 					letter-spacing: 2px;
+					opacity: 0;
 				}
 			}
 			#link-down {
 				background-color: white;
-				bottom: 130px;
+				bottom: 100px;
 				border-radius: 100%;
 				color: $brand-blue;
+				cursor: pointer;
 				display: table;
 				height: 30px;
 				left: 0;
@@ -319,6 +423,7 @@ a {
 				z-index: 10;
 				&:hover {
 					background-color: $brand-blue;
+					bottom: 95px;
 					color: white;
 					transition: all 500ms;
 				}
@@ -337,7 +442,10 @@ a {
 			}
 		}
 		#about {
+			align-items: center;
 			background-color: rgb(248,248,248);
+			display: flex;
+			flex-direction: column;
 			padding-bottom: 90px;
 			#logos {
 				display: flex;
@@ -356,6 +464,23 @@ a {
 					}
 				}
 			}
+			#resume {
+				background-color: $brand-blue;
+				border: 2px solid $brand-blue;
+				color: #fff;
+				font-size: 16px;
+				font-weight: 600;
+				letter-spacing: 3px;
+				margin: 25px auto;
+				padding: 16px;
+				text-transform: uppercase;
+				transition: all .4s;
+				&:hover {
+					background-color: $secondary-blue;
+					border: 2px solid $secondary-blue;
+					transition: all .5s;
+				}
+			}
 			div#counter {
 				display: flex;
 				justify-content: center;
@@ -363,8 +488,11 @@ a {
 					font-size: 72px;
 					font-weight: 700;
 					margin: 0px;
-					@media screen and (max-width: 414px) {
+					@media screen and (max-width: 568px) {
 						font-size: 45px;
+					}
+					@media screen and (max-width: 320px) {
+						font-size: 40px;
 					}
 				}
 				p.years {
@@ -373,9 +501,12 @@ a {
 					font-weight: 400;
 					margin: 18px 10px;
 					text-transform: uppercase;
-					@media screen and (max-width: 414px) {
+					@media screen and (max-width: 568px) {
 						font-size: 25px;
 						margin: 15px 5px;
+					}
+					@media screen and (max-width: 320px) {
+						font-size: 21px;
 					}
 				}
 			}
@@ -401,6 +532,16 @@ a {
 			background-color: white;
 			min-height: 300px;
 			padding-bottom: 75px;
+			#messages {
+				color: $secondary-blue;
+				font-size: 16px;
+				margin: 30px auto;
+				text-align: center;
+				width: 768px;
+				@media screen and (max-width: 768px) {
+					width: 100%;
+				}
+			}
 			.fa-comments-o {
 				position: relative;
 				top: -8px;
@@ -421,6 +562,7 @@ a {
 						font-size: 21px;
 						height: 80px;
 						padding-bottom: 5px;
+						padding-left: 10px;
 						width: 100%;
 						@media screen and (max-width: 768px) {
 							width: 90%;
@@ -430,6 +572,7 @@ a {
 						background-color: $brand-blue;
 						border: 2px solid $brand-blue;
 						color: #fff;
+						cursor: pointer;
 						font-size: 16px;
 						font-weight: 600;
 						letter-spacing: 3px;
@@ -450,6 +593,7 @@ a {
 						height: auto;
 						font-size: 21px;
 						min-height: 80px;
+						padding-left: 10px;
 						padding-top: 25px;
 						transition: min-height .5s;
 						width: 100%;
@@ -500,7 +644,7 @@ a {
 			}
 			.work-posts {
 				display: flex;
-				justify-content: space-around;
+				justify-content: space-between;
 				flex-direction: row;
 				flex-wrap: wrap;
 				.post {
