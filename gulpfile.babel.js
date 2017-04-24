@@ -75,13 +75,16 @@ templates = {
 	.pipe(concat('app.js'))
 	.pipe(gulp.dest(scripts.build))
 	.pipe(concat('app.js'))
+	.pipe(uglify())
 	.pipe(rename({ suffix: '.min' }))
 	.pipe(gulp.dest('./public/js'));
 });
 
 gulp.task('templates', function() {
 	gulp.src('./_src/templates/index.pug')
-	.pipe(pug())
+	.pipe(pug({
+		pretty: true
+	}))
 	.pipe(rename({extname:'.html'}))
 	.pipe(gulp.dest('./'));
 });
