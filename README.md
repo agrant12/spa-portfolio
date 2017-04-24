@@ -1,5 +1,5 @@
 # spa-portfolio
-Single page personal portfolio for Alvin Grant.
+Single page personal portfolio for alvingrant.com.
 
 Built with:
 
