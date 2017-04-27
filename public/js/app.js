@@ -3907,7 +3907,6 @@ var app = function () {
 			    tags = data.acf.project_type;
 
 			$('.lightbox h3.title').append(title);
-			//$('.lightbox .featured-image img').attr('src', img);
 			$('.lightbox .content').append(content);
 			$('.lightbox .tags').append(tags);
 			for (image of gallery) {
