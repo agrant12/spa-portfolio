@@ -3843,8 +3843,7 @@ var app = function () {
 			"async": true,
 			"crossDomain": true,
 			"url": siteUrl + "?per_page=6&categories=2",
-			"method": "GET",
-			"headers": {}
+			"method": "GET"
 		};
 		$.ajax(settings).done(function (data) {
 			var work_posts = document.querySelector('.work-posts');
@@ -3894,7 +3893,6 @@ var app = function () {
 			"crossDomain": true,
 			"url": siteUrl + "/" + id,
 			"method": "GET",
-			"headers": {},
 			complete: function () {
 				$('.lightbox #preloader_overlay').fadeOut(600);
 			}
@@ -3962,8 +3960,7 @@ var app = function () {
 			"async": true,
 			"crossDomain": true,
 			"url": siteUrl + "?per_page=5&categories=118",
-			"method": "GET",
-			"headers": {}
+			"method": "GET"
 		};
 		$.ajax(settings).done(function (data) {
 			var d = data;

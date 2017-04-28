@@ -311,6 +311,9 @@ animation-delay: .8s;
 		flex-direction: column;
 		section {
 			padding-top: 90px;
+			@media screen and (max-width: 375px) {
+				padding-top: 75px;
+			}
 			h3.title {
 				color: $secondary-blue;
 				font-size: 30px;
@@ -657,19 +660,22 @@ animation-delay: .8s;
 				flex-wrap: wrap;
 				.post {
 					cursor: pointer;
-					height: 198px;
-					margin: 10px;
+					height: 300px;
+					margin: 20px 10px;
 					position: relative;
 					opacity: 0;
 					overflow: hidden;
-					width: calc(100%/3 - 20px);
+					width: calc(100%/2 - 30px);
 					@media screen and (max-width: 768px) {
-						margin: 20px;
+						margin: 10px 20px;
 						transition: all .5s;
 						width: calc(100%/2 - 40px);
 					}
 					@media screen and (max-width: 414px) {
 						width: 100%;
+					}
+					@media screen and (max-width: 375px) {
+						margin: 5px;
 					}
 					div {
 						cursor: pointer;
