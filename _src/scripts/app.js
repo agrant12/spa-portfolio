@@ -1,5 +1,17 @@
 'use strict';
 
+if ('serviceWorker' in navigator) {
+	window.addEventListener('load', function() {
+		navigator.serviceWorker.register('./sw.js').then(function(registration) {
+			// Registration was successful
+			console.log('ServiceWorker registration successful with scope: ', registration.scope);
+		}, function(err) {
+			// registration failed :(
+			console.log('ServiceWorker registration failed: ', err);
+		});
+	});
+}
+
 var app = (function() {
 
 	var selectedWorks = function() {
@@ -17,9 +29,9 @@ var app = (function() {
 			
 			for (var value of data) {
 				var title = value.title.rendered,
-					id = value.id,
-					image = value.better_featured_image.source_url,
-					tags = value.acf.project_type;
+				id = value.id,
+				image = value.better_featured_image.source_url,
+				tags = value.acf.project_type;
 
 				var	work = "<div class='post'><div class='data-post' data-post-id=" + id + "><h4 class='title'>" + title + "</h4><p class='tags'>" + tags + "</p><div class='overlay'></div><div class='featured-image'><img src=" + image +" /></div></div></div>";
 				$(work_posts).append(work);
@@ -50,24 +62,24 @@ var app = (function() {
 
 	var openLightBox = function(id) {
 		var	siteUrl = 'http://alvingrant.com/api/wp-json/wp/v2/posts',
-			lightbox = document.querySelector('.lightbox'),
-			body = document.getElementsByTagName('body')[0],
-			overlay = document.querySelector('.body-overlay'),
-			settings = {
-				"async": true,
-				"crossDomain": true,
-				"url": siteUrl + "/" + id,
-				"method": "GET",
-				complete: function() {
-					$('.lightbox #preloader_overlay').fadeOut(600);
-				}
-			};
+		lightbox = document.querySelector('.lightbox'),
+		body = document.getElementsByTagName('body')[0],
+		overlay = document.querySelector('.body-overlay'),
+		settings = {
+			"async": true,
+			"crossDomain": true,
+			"url": siteUrl + "/" + id,
+			"method": "GET",
+			complete: function() {
+				$('.lightbox #preloader_overlay').fadeOut(600);
+			}
+		};
 		$.ajax(settings).done(function(data) {
 			var title = data.title.rendered,
-				img = data.better_featured_image.source_url,
-				content = data.content.rendered,
-				gallery = data.acf.gallery,
-				tags = data.acf.project_type;
+			img = data.better_featured_image.source_url,
+			content = data.content.rendered,
+			gallery = data.acf.gallery,
+			tags = data.acf.project_type;
 
 			$('.lightbox h3.title').append(title);
 			$('.lightbox .content').append(content);
@@ -88,13 +100,13 @@ var app = (function() {
 
 	var closeLightbox = function() {
 		var close = document.querySelector('.lightbox div.close'),
-			lightbox = document.querySelector('.lightbox'),
-			title = document.querySelector('.lightbox h3.title'),
-			content = document.querySelector('.lightbox .content'),
-			gallery = document.querySelector('.lightbox .gallery'),
-			tags = document.querySelector('.lightbox .tags'),
-			overlay = document.querySelector('.body-overlay'),
-			body = document.getElementsByTagName('body')[0];
+		lightbox = document.querySelector('.lightbox'),
+		title = document.querySelector('.lightbox h3.title'),
+		content = document.querySelector('.lightbox .content'),
+		gallery = document.querySelector('.lightbox .gallery'),
+		tags = document.querySelector('.lightbox .tags'),
+		overlay = document.querySelector('.body-overlay'),
+		body = document.getElementsByTagName('body')[0];
 
 		close.addEventListener('click', function(e) {
 			e.preventDefault();
@@ -131,8 +143,8 @@ var app = (function() {
 			var d = data;
 			for (var value of data) {
 				var title = value.title.rendered,
-					id = value.id,
-					post = "<div class='post'><h5 class='title'><a href='blog.html#" + id + "' class='data-post' data-post-id=" + id + ">" + title + "</a></h5></div>";
+				id = value.id,
+				post = "<div class='post'><h5 class='title'><a href='blog.html#" + id + "' class='data-post' data-post-id=" + id + ">" + title + "</a></h5></div>";
 				$('#footer-post').append(post);
 			}
 		});
@@ -140,9 +152,9 @@ var app = (function() {
 
 	var heroHeight = function() {
 		var $wh = window.innerHeight,
-			$hero = $('#hero'),
-			$container = $('.container');
-			$content = $('#content');
+		$hero = $('#hero'),
+		$container = $('.container');
+		$content = $('#content');
 
 		$hero.css({'height': $wh});
 		$content.css({'margin-top': $wh});
@@ -150,7 +162,7 @@ var app = (function() {
 
 	var menuFadeIn = function() {
 		var menu = document.querySelector('.wrapper header'),
-			intro = document.querySelector('#intro');
+		intro = document.querySelector('#intro');
 		removeClass(intro, 'fadeIn');
 		addClass(intro, 'fadeOut');
 		removeClass(menu, 'fadeOut');
@@ -159,7 +171,7 @@ var app = (function() {
 
 	var menuFadeOut = function() {
 		var menu = document.querySelector('.wrapper header'),
-			intro = document.querySelector('#intro');
+		intro = document.querySelector('#intro');
 		addClass(intro, 'fadeIn');
 		removeClass(intro, 'fadeOut');
 		addClass(menu, 'fadeOut');
@@ -168,13 +180,13 @@ var app = (function() {
 
 	var showMenu = function() {
 		var line1 = document.querySelector('.line1'),
-			line2 = document.querySelector('.line2'),
-			line3 = document.querySelector('.line3'),
-			menuIcon = document.querySelector('.menu-icon'),
-			menuIconSpan = document.querySelectorAll('.menu-icon span'),
-			branding = document.querySelector('.branding a h1'),
-			nav = document.getElementById('nav'),
-			clicked = false;
+		line2 = document.querySelector('.line2'),
+		line3 = document.querySelector('.line3'),
+		menuIcon = document.querySelector('.menu-icon'),
+		menuIconSpan = document.querySelectorAll('.menu-icon span'),
+		branding = document.querySelector('.branding a h1'),
+		nav = document.getElementById('nav'),
+		clicked = false;
 
 		menuIcon.addEventListener('mouseover', function() {
 			addClass(line1, 'move-left');
@@ -209,8 +221,8 @@ var app = (function() {
 
 	var counterAnimation = function() {
 		var tl = new TimelineMax(),
-			counter = { var: 0 },
-			count = document.getElementById('count');
+		counter = { var: 0 },
+		count = document.getElementById('count');
 		
 		window.addEventListener('scroll', function() {
 			if (visibleElement(count, 200) == true) {
@@ -234,8 +246,8 @@ var app = (function() {
 
 	var animateGrid = function() {
 		var tl = new TimelineMax(),
-			works = document.getElementById('works'),
-			items = document.querySelectorAll('.work-posts .post');
+		works = document.getElementById('works'),
+		items = document.querySelectorAll('.work-posts .post');
 
 		window.addEventListener('scroll', function() {
 			if (visibleElement(works, 150) == true) {
@@ -246,7 +258,7 @@ var app = (function() {
 
 	var submitForm = function() {
 		var form = document.getElementById('contact-form'),
-			messages = document.getElementById('messages');
+		messages = document.getElementById('messages');
 
 		form.addEventListener('submit', function(e) {
 			e.preventDefault();
@@ -277,10 +289,10 @@ var app = (function() {
 
 	var preload = function() {
 		var loader = document.getElementById('preloader_overlay'),
-			tl = new TimelineMax(),
-			name = document.querySelector('.name'),
-			occupation = document.querySelector('.occupation'),
-			heroElements = document.querySelectorAll('.hero-element');
+		tl = new TimelineMax(),
+		name = document.querySelector('.name'),
+		occupation = document.querySelector('.occupation'),
+		heroElements = document.querySelectorAll('.hero-element');
 
 		addClass(loader, 'fadeOut');
 		window.setTimeout(function() {
@@ -311,10 +323,10 @@ var app = (function() {
 
 	var aboutScroll = function() {
 		var tl = new TimelineMax(),
-			scroll_btn = document.getElementById('link-down'),
-			about = document.getElementById('about').getBoundingClientRect(),
-			header = document.getElementsByTagName('header')[0].clientHeight,
-			pos = about.top - header;
+		scroll_btn = document.getElementById('link-down'),
+		about = document.getElementById('about').getBoundingClientRect(),
+		header = document.getElementsByTagName('header')[0].clientHeight,
+		pos = about.top - header;
 
 		scroll_btn.addEventListener('click', function() {
 			tl.to(window, 0.5, {scrollTo: { y: pos }});
@@ -336,7 +348,7 @@ var app = (function() {
 	/* 
 	 *	Helper Functions
 	 */
-	
+	 
 	// Add class to DOM element
 	var addClass = function(selector, className) {
 		selector.classList.add(className);
@@ -350,9 +362,9 @@ var app = (function() {
 	// Check if DOM element is visible within Window object after set threshold
 	var visibleElement = function(selector, threshold) {
 		var box = selector.getBoundingClientRect(),
-			w = window.innerHeight,
-			top = w - box.top,
-			bottom = w - box.bottom;
+		w = window.innerHeight,
+		top = w - box.top,
+		bottom = w - box.bottom;
 
 		if (top > threshold) {
 			return true;

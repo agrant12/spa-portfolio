@@ -1,5 +1,6 @@
 {
- "name": "App",
+ "name": "Alvin Grant Portfolio",
+ "orientation": "Portrait",
  "icons": [
   {
    "src": "public\/images\/favicon\/android-icon-36x36.png",

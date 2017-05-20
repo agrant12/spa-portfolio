@@ -50,6 +50,7 @@ templates = {
 		cascade: false
 	}))
 	.pipe(gulp.dest(styles.build))
+	.pipe(concat('app.css'))
 	.pipe(rename({ suffix: '.min' }))
 	.pipe(gulp.dest(styles.build));
 });
