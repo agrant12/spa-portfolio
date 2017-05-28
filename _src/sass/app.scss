@@ -412,6 +412,7 @@ animation-delay: .8s;
 				}
 				.occupation {
 					color: white;
+					font-family: 'Open Sans', sans-serif;
 					font-weight: 400;
 					letter-spacing: 2px;
 					opacity: 0;
@@ -524,13 +525,13 @@ animation-delay: .8s;
 			p.copy {
 				color: #666;
 				font-size: 16px;
-				font-weight: 300;
+				font-family: 'Open Sans', sans-serif;
 				letter-spacing: 2px;
 				line-height: 25px;
 				margin: 20px auto;
 				padding-left: 5px;
-				width: 550px;
-				@media screen and (max-width: 550px) {
+				width: 560px;
+				@media screen and (max-width: 560px) {
 					font-size: 14px;
 					width: 95%;
 				}
@@ -619,6 +620,7 @@ animation-delay: .8s;
 			}
 			p.copy {
 				color: #666;
+				font-family: 'Open Sans', sans-serif;
 				font-size: 16px;
 				font-weight: 300;
 				letter-spacing: 2px;
@@ -798,7 +800,8 @@ animation-delay: .8s;
 		}
 		.content {
 			color: #666;
-			font-size: 16px;
+			font-size: 14px;
+			font-family: 'Open Sans', sans-serif;
 			font-weight: 300;
 			line-height: 25px;
 			margin: 0 auto;

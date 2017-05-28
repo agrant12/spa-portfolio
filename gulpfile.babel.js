@@ -50,6 +50,7 @@ templates = {
 		cascade: false
 	}))
 	.pipe(gulp.dest(styles.build))
+	.pipe(concat('app.css'))
 	.pipe(rename({ suffix: '.min' }))
 	.pipe(gulp.dest(styles.build));
 });
@@ -75,9 +76,8 @@ templates = {
 	.pipe(concat('app.js'))
 	.pipe(gulp.dest(scripts.build))
 	.pipe(concat('app.js'))
-	.pipe(uglify())
 	.pipe(rename({ suffix: '.min' }))
-	.pipe(gulp.dest('./public/js'));
+	.pipe(gulp.dest(scripts.build));
 });
 
 gulp.task('templates', function() {
