@@ -83,7 +83,7 @@ templates = {
 gulp.task('templates', function() {
 	gulp.src('./_src/templates/index.pug')
 	.pipe(pug({
-		pretty: true
+		pretty: false
 	}))
 	.pipe(rename({extname:'.html'}))
 	.pipe(gulp.dest('./'));
