@@ -24,7 +24,8 @@ var app = (function() {
 		}
 		$.ajax(settings).done(function(data) {
 			var work_posts = document.querySelector('.work-posts');
-			
+
+			// Save post data to local storage
 			savePostData(data);
 			
 			for (var value of data) {
@@ -55,43 +56,71 @@ var app = (function() {
 
 	// Save data to local storage
 	var savePostData = function(data) {
-		for (var post of data) {
-			localStorage.setItem(post.id, post);
+		if (window.localStorage) {
+			for (var post of data) {
+				localStorage.setItem(post.id, JSON.stringify(post));
+			}
+		} else {
+			return false;
 		}
 	}
 
 	var openLightBox = function(id) {
-		var	siteUrl = 'http://alvingrant.com/api/wp-json/wp/v2/posts',
-		lightbox = document.querySelector('.lightbox'),
-		body = document.getElementsByTagName('body')[0],
-		overlay = document.querySelector('.body-overlay'),
-		settings = {
-			"async": true,
-			"crossDomain": true,
-			"url": siteUrl + "/" + id,
-			"method": "GET",
-			complete: function() {
-				$('.lightbox #preloader_overlay').fadeOut(600);
-			}
-		};
-		$.ajax(settings).done(function(data) {
-			var title = data.title.rendered,
-			img = data.better_featured_image.source_url,
-			content = data.content.rendered,
-			gallery = data.acf.gallery,
-			tags = data.acf.project_type;
 
+		var post = JSON.parse(localStorage.getItem(id)),
+			lightbox = document.querySelector('.lightbox'),
+			body = document.getElementsByTagName('body')[0],
+			overlay = document.querySelector('.body-overlay');
+
+		if (post !== null) {
+			var title = post.title.rendered,
+				img = post.better_featured_image.source_url,
+				content = post.content.rendered,
+				gallery = post.acf.gallery,
+				tags = post.acf.project_type;
+
+			$('.lightbox #preloader_overlay').fadeOut(600);
 			$('.lightbox h3.title').append(title);
 			$('.lightbox .content').append(content);
 			$('.lightbox .tags').append(tags);
+
 			for (image of gallery) {
 				var img = '<img src="' + image.sizes.medium_large + '" />';
 				$('.lightbox .gallery').append(img);
 			}
-		});
+		} else {
+			var settings = {
+				"async": true,
+				"crossDomain": true,
+				"url": "http://alvingrant.com/api/wp-json/wp/v2/posts/" + id,
+				"method": "GET",
+				complete: function() {
+					$('.lightbox #preloader_overlay').fadeOut(600);
+				}
+			};
+			$.ajax(settings).done(function(data) {
+				var title = data.title.rendered,
+					img = data.better_featured_image.source_url,
+					content = data.content.rendered,
+					gallery = data.acf.gallery,
+					tags = data.acf.project_type;
+
+				$('.lightbox #preloader_overlay').fadeOut(600);
+				$('.lightbox h3.title').append(title);
+				$('.lightbox .content').append(content);
+				$('.lightbox .tags').append(tags);
+
+				for (image of gallery) {
+					var img = '<img src="' + image.sizes.medium_large + '" />';
+					$('.lightbox .gallery').append(img);
+				}
+			});
+		}	
+
 		body.style.overflow = 'hidden';
 		lightbox.style.display = 'block';
 		overlay.style.display = 'block';
+
 		window.setTimeout(function() {
 			addClass(lightbox, 'fadeIn');
 			addClass(overlay, 'fadeIn');
