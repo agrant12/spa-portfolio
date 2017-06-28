@@ -1,5 +1,5 @@
 var CACHE_ASSETS = 'my-assets-v1';
-var	urlsToCache = ['/', '/index.html', '/public/js/app.min.js', '/public/css/app.min.css', '/public/images/_DSC8012.jpg', '/resume.docx'];
+var	urlsToCache = ['/', '/index.html', '/public/js/app.min.js', '/public/css/app.min.css', '/public/images/_DSC8012.jpg', '/resume.pdf'];
 
 self.addEventListener('install', function(event) {
 	event.waitUntil(
@@ -27,10 +27,6 @@ self.addEventListener('fetch', function(event) {
 					return response;
 				}
 
-				// IMPORTANT: Clone the response. A response is a stream
-				// and because we want the browser to consume the response
-				// as well as the cache consuming the response, we need
-				// to clone it so we have two streams.
 				var responseToCache = response.clone();
 
 				caches.open(CACHE_ASSETS)
