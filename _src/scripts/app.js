@@ -34,7 +34,7 @@ var app = (function() {
 				image = value.better_featured_image.source_url,
 				tags = value.acf.project_type;
 
-				var	work = "<div class='post'><div class='data-post' data-post-id=" + id + "><h4 class='title'>" + title + "</h4><p class='tags'>" + tags + "</p><div class='overlay'></div><div class='featured-image'><img src=" + image +" /></div></div></div>";
+				var	work = "<div class='post'><div class='data-post' data-post-id=" + id + "><h4 class='title'>" + title + "</h4><p class='tags'>" + tags + "</p><div class='overlay'></div><div class='featured-image'><img src=" + image + " /></div></div></div>";
 				$(work_posts).append(work);
 			}
 		}).then(function() {
@@ -76,18 +76,14 @@ var app = (function() {
 			var title = post.title.rendered,
 				img = post.better_featured_image.source_url,
 				content = post.content.rendered,
-				gallery = post.acf.gallery,
+				gallery = post.acf.gallery.url,
 				tags = post.acf.project_type;
 
 			$('.lightbox #preloader_overlay').fadeOut(600);
 			$('.lightbox h3.title').append(title);
 			$('.lightbox .content').append(content);
 			$('.lightbox .tags').append(tags);
-
-			for (image of gallery) {
-				var img = '<img src="' + image.sizes.medium_large + '" />';
-				$('.lightbox .gallery').append(img);
-			}
+			$('.lightbox .gallery').append("<img src='" + gallery + "' />");
 		} else {
 			var settings = {
 				"async": true,
@@ -102,18 +98,14 @@ var app = (function() {
 				var title = data.title.rendered,
 					img = data.better_featured_image.source_url,
 					content = data.content.rendered,
-					gallery = data.acf.gallery,
+					gallery = data.acf.gallery.url,
 					tags = data.acf.project_type;
 
 				$('.lightbox #preloader_overlay').fadeOut(600);
 				$('.lightbox h3.title').append(title);
 				$('.lightbox .content').append(content);
 				$('.lightbox .tags').append(tags);
-
-				for (image of gallery) {
-					var img = '<img src="' + image.sizes.medium_large + '" />';
-					$('.lightbox .gallery').append(img);
-				}
+				$('.lightbox .gallery').append("<img src='" + gallery + "' />");
 			});
 		}	
 
